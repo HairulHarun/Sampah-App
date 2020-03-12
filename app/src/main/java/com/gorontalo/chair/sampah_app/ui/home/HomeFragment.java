@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -27,6 +28,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -36,6 +38,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -59,7 +62,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class HomeFragment extends Fragment implements OnMapReadyCallback{
@@ -101,6 +106,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
 
                 loginToFirebase();
                 getPekerjaan(gMap);
+                getRute(gMap);
             }
         }catch (NullPointerException e){
 
@@ -212,9 +218,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
                                 pekerjaanModel.setDeskripsitps(obj.getString("deskripsi_tps"));
                                 pekerjaanModel.setStatus(obj.getString("status_pekerjaan"));
 
-                                Toast.makeText(getActivity().getApplicationContext(), obj.getString("status_pekerjaan"), Toast.LENGTH_SHORT).show();
-
-                                addMarker(googleMap, Double.valueOf(obj.getString("lat_tps")), Double.valueOf(obj.getString("long_tps")), obj.getString("status_pekerjaan"));
+                                addMarker(googleMap, Double.valueOf(obj.getString("lat_tps")), Double.valueOf(obj.getString("long_tps")), obj.getString("nama_tps"));
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -231,7 +235,63 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Get Data Errorrrr: " + error.getMessage());
+                Log.e(TAG, "Get Data Error Pekerjaan: " + error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id_petugas", sessionAdapter.getId());
+
+                return params;
+            }
+        };
+
+        VolleyAdapter.getInstance().addToRequestQueue(strReq, "getPekerjaan");
+    }
+
+    private void getRute(final GoogleMap googleMap) {
+        HttpsTrustManagerAdapter.allowAllSSL();
+        StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().getRute(), new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.e(TAG, "Data Response: " + response);
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    int success = jObj.getInt("success");
+                    if (success == 1) {
+                        JSONArray jsonArray = jObj.getJSONArray("hasil");
+                        List<LatLng> position = new ArrayList<>();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            try {
+                                JSONObject obj = jsonArray.getJSONObject(i);
+
+                                String id_rute = obj.getString("id");
+                                String id_petugas = obj.getString("id_petugas");
+                                double lat_rute = Double.valueOf(obj.getString("lat_rute"));
+                                double long_rute = Double.valueOf(obj.getString("long_rute"));
+
+                                position.add(new LatLng(lat_rute, long_rute));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        drawPolyLineOnMap(googleMap, position);
+                    } else {
+                        Log.e(TAG, jObj.getString("hasil"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Get Data Error rute: " + error.getMessage());
             }
         }) {
             @Override
@@ -252,6 +312,27 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
                 .position(new LatLng(latitude, longitude))
                 .title(nama_tps)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+    }
+
+    public void drawPolyLineOnMap(GoogleMap googleMap, List<LatLng> list) {
+        PolylineOptions polyOptions = new PolylineOptions();
+        polyOptions.color(Color.RED);
+        polyOptions.width(5);
+        polyOptions.addAll(list);
+
+        googleMap.clear();
+        googleMap.addPolyline(polyOptions);
+
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        for (LatLng latLng : list) {
+            builder.include(latLng);
+        }
+
+        final LatLngBounds bounds = builder.build();
+
+        //BOUND_PADDING is an int to specify padding of bound.. try 100.
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 100);
+        googleMap.animateCamera(cu);
     }
 
 }
