@@ -132,10 +132,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void onBackPressed(){
-        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-    }
-
     private void getLogin(final String username, final String password) {
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setMessage("Sedang Login ...");
