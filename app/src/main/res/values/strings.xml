@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Sampah-App</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Beranda</string>
+    <string name="title_dashboard">Profil</string>
+    <string name="title_notifications">Tentang</string>
+    <string name="firebase_email" translatable="false">chairulharun@gmail.com</string>
+    <string name="firebase_password" translatable="false">123456789uyi</string>
+    <string name="google_maps_api_key">AIzaSyBAZ4fdoXOcKI-BexjyHxPOIqqvB9eh1rY</string>
+</resources>
