@@ -19,11 +19,19 @@ public class URLAdapter {
         return URL = URL+"ws-get-rute.php";
     }
 
+    public String getTPSByID(){
+        return URL = URL+"ws-get-tps-id.php";
+    }
+
     public String updateLokasiPetugas(){
         return URL = URL+"ws-update-lokasi-petugas.php";
     }
 
     public String getPhotoPetugas(String photo){
         return URL = URL_PHOTO+"/petugas/"+photo;
+    }
+
+    public String getPhotoTps(String photo){
+        return URL = URL_PHOTO+"/tps/"+photo;
     }
 }
