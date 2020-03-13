@@ -111,6 +111,36 @@ public class SessionAdapter {
         return user;
     }
 
+    public String getNoPolisi(){
+        String user = pref.getString(KEY_NOPOLISI, null);
+        return user;
+    }
+
+    public String getPhotoKenderaan(){
+        String user = pref.getString(KEY_PHOTOKENDERAAN, null);
+        return user;
+    }
+
+    public String getPhotoSopir(){
+        String user = pref.getString(KEY_PHOTOSOPIR, null);
+        return user;
+    }
+
+    public String getPhotoKondektur1(){
+        String user = pref.getString(KEY_PHOTOKONDEKTUR1, null);
+        return user;
+    }
+
+    public String getPhotoKondektur2(){
+        String user = pref.getString(KEY_PHOTOKONDEKTUR2, null);
+        return user;
+    }
+
+    public String getHp(){
+        String user = pref.getString(KEY_HP, null);
+        return user;
+    }
+
     public String getTanki(){
         String user = pref.getString(KEY_TANKI, null);
         return user;

@@ -181,9 +181,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         if (!mMarkers.containsKey(key)) {
             int tanki = Integer.parseInt(locationModel.getTanki());
             if (tanki >= 80 ){
-                mMarkers.put(key, gMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.car))));
+                mMarkers.put(key, gMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.common_google_signin_btn_icon_dark))));
             }else{
-                mMarkers.put(key, gMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.car2))));
+                mMarkers.put(key, gMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.common_google_signin_btn_icon_dark))));
             }
         } else {
             mMarkers.get(key).setPosition(location);
@@ -325,7 +325,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         polyOptions.width(5);
         polyOptions.addAll(list);
 
-        googleMap.clear();
+//        googleMap.clear();
         googleMap.addPolyline(polyOptions);
 
         LatLngBounds.Builder builder = new LatLngBounds.Builder();

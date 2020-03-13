@@ -5,7 +5,7 @@ public class URLAdapter {
     private String URL_PHOTO = "http://192.168.0.104/admin-control/assets/images/photo/";*/
 
     private String URL = "https://hairulharun.000webhostapp.com/sampah/webservices/";
-    private String URL_PHOTO = "https://hairulharun.000webhostapp.com/sampah/admin-control/assets/images/photo/";
+    private String URL_PHOTO = "https://hairulharun.000webhostapp.com/sampah/assets/images/photo/";
 
     public String getLogin(){
         return URL = URL+"ws-login-petugas.php";
@@ -21,5 +21,9 @@ public class URLAdapter {
 
     public String updateLokasiPetugas(){
         return URL = URL+"ws-update-lokasi-petugas.php";
+    }
+
+    public String getPhotoPetugas(String photo){
+        return URL = URL_PHOTO+"/petugas/"+photo;
     }
 }
