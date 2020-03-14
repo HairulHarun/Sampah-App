@@ -79,6 +79,27 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Tanki Mobil Saat Ini" />
+
+            <TextView
+                android:id="@+id/txtSeekbarValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:text="0" />
+
+            <SeekBar
+                android:id="@+id/seekBarTanki"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp" />
+
             <Button
                 android:id="@+id/btnInsert"
                 android:layout_width="match_parent"
@@ -87,7 +108,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@color/colorPrimaryDark"
                 android:text="Kirim Data"
-                android:textColor="@color/colorWhite"/>
+                android:textColor="@color/colorWhite" />
 
         </LinearLayout>
     </ScrollView>

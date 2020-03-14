@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,7 +55,8 @@ public class PekerjaanActivity extends AppCompatActivity {
     private Intent intent;
     private String id, id_pekerjaan, nama;
     private ImageView imgPhoto;
-    private TextView txtNamaTps;
+    private TextView txtNamaTps, txtSeekbarValue;
+    private SeekBar seekBarTanki;
     private Button btnInsert, btnPilihPhoto;
 
     private int PICK_IMAGE_REQUEST = 1;
@@ -78,9 +80,27 @@ public class PekerjaanActivity extends AppCompatActivity {
         btnInsert = (Button) findViewById(R.id.btnInsert);
         btnPilihPhoto = (Button) findViewById(R.id.btnPilihPhoto);
         txtNamaTps = (TextView) findViewById(R.id.txtPekerjaanNamaTps);
+        txtSeekbarValue = (TextView) findViewById(R.id.txtSeekbarValue);
+        seekBarTanki = (SeekBar) findViewById(R.id.seekBarTanki);
         btnInsert.setVisibility(View.INVISIBLE);
 
         txtNamaTps.setText(nama);
+        seekBarTanki.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                txtSeekbarValue.setText(String.valueOf(progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
 
         sessionAdapter = new SessionAdapter(getApplicationContext());
         koneksiAdapter = new KoneksiAdapter(getApplicationContext());
@@ -176,6 +196,7 @@ public class PekerjaanActivity extends AppCompatActivity {
                             JSONObject jObj = new JSONObject(response);
                             int success = jObj.getInt("success");
                             if (success == 1) {
+                                sessionAdapter.setTanki(txtSeekbarValue.getText().toString());
                                 startActivity(new Intent(PekerjaanActivity.this, MainActivity.class));
                             } else {
                                 Toast.makeText(getApplicationContext(), jObj.getString("message"), Toast.LENGTH_LONG).show();
@@ -201,6 +222,7 @@ public class PekerjaanActivity extends AppCompatActivity {
                 params.put("latitude", sessionAdapter.getLatitude());
                 params.put("longitude", sessionAdapter.getLongitude());
                 params.put("photo", image);
+                params.put("tanki", txtSeekbarValue.getText().toString());
 
                 return params;
             }
