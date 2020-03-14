@@ -74,6 +74,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
     private HashMap<String, Marker> mMarkers = new HashMap<>();
     private GoogleMap gMap;
     private SupportMapFragment mapFragment;
+    private MarkerOptions markerOptions = new MarkerOptions();
 
     private ChildEventListener mChildEventListener;
     private DatabaseReference mProfileRef;
@@ -181,9 +182,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         if (!mMarkers.containsKey(key)) {
             int tanki = Integer.parseInt(locationModel.getTanki());
             if (tanki >= 80 ){
-                mMarkers.put(key, gMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.car))));
+                mMarkers.put(key, gMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.defaultMarker())));
             }else{
-                mMarkers.put(key, gMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.car2))));
+                mMarkers.put(key, gMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.defaultMarker())));
             }
         } else {
             mMarkers.get(key).setPosition(location);
@@ -209,26 +210,19 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
                     if (success == 1) {
                         JSONArray jsonArray = jObj.getJSONArray("hasil");
                         for (int i = 0; i < jsonArray.length(); i++) {
-                            try {
-                                JSONObject obj = jsonArray.getJSONObject(i);
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            String id_pekerjaan = jsonObject.getString("id");
+                            String id_tps = jsonObject.getString("id_tps");
+                            String lat_tps = jsonObject.getString("lat_tps");
+                            String long_tps = jsonObject.getString("long_tps");
+                            String nama_tps = jsonObject.getString("nama_tps");
+                            String photo_tps = jsonObject.getString("photo_tps");
+                            String deskripsi_tps = jsonObject.getString("deskripsi_tps");
+                            String status_pekerjaan = jsonObject.getString("status_pekerjaan");
 
-                                PekerjaanModel pekerjaanModel = new PekerjaanModel();
-                                pekerjaanModel.setId(obj.getString("id"));
-                                pekerjaanModel.setIdpetugas(obj.getString("id_petugas"));
-                                pekerjaanModel.setIdtps(obj.getString("id_tps"));
-                                pekerjaanModel.setNamatps(obj.getString("nama_tps"));
-                                pekerjaanModel.setLattps(Double.valueOf(obj.getString("lat_tps")));
-                                pekerjaanModel.setLongtps(Double.valueOf(obj.getString("long_tps")));
-                                pekerjaanModel.setPhototps(obj.getString("photo_tps"));
-                                pekerjaanModel.setDeskripsitps(obj.getString("deskripsi_tps"));
-                                pekerjaanModel.setStatus(obj.getString("status_pekerjaan"));
-
-                                addMarker(googleMap, Double.valueOf(obj.getString("lat_tps")), Double.valueOf(obj.getString("long_tps")), obj.getString("nama_tps"));
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                            addMarker(googleMap, new LatLng(Double.valueOf(jsonObject.getString("lat_tps")), Double.valueOf(jsonObject.getString("long_tps"))), id_tps, id_pekerjaan, status_pekerjaan);
                         }
+
                     } else {
                         Log.e(TAG, jObj.getString("hasil"));
                     }
@@ -254,6 +248,25 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         };
 
         VolleyAdapter.getInstance().addToRequestQueue(strReq, "getPekerjaan");
+    }
+
+    private void addMarker(GoogleMap googleMap, LatLng latlng, final String id, final String id_pekerjaan, String status) {
+        markerOptions.position(latlng);
+        markerOptions.title(id);
+
+        if (status.equals("1")){
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+        }else{
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+        }
+        googleMap.addMarker(markerOptions);
+        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                TpsFragment bottomSheetFragment = new TpsFragment(marker.getTitle().toString(), id_pekerjaan);
+                bottomSheetFragment.show(getActivity().getSupportFragmentManager(), bottomSheetFragment.getTag());
+            }
+        });
     }
 
     private void getRute(final GoogleMap googleMap) {
@@ -312,20 +325,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         VolleyAdapter.getInstance().addToRequestQueue(strReq, "getPekerjaan");
     }
 
-    private void addMarker(GoogleMap googleMap, double latitude, double longitude, String nama_tps) {
-        googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(latitude, longitude))
-                .title(nama_tps)
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
-    }
-
     public void drawPolyLineOnMap(GoogleMap googleMap, List<LatLng> list) {
         PolylineOptions polyOptions = new PolylineOptions();
-        polyOptions.color(Color.RED);
-        polyOptions.width(5);
+        polyOptions.color(Color.BLUE);
+        polyOptions.width(8);
         polyOptions.addAll(list);
 
-        googleMap.clear();
+//        googleMap.clear();
         googleMap.addPolyline(polyOptions);
 
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
@@ -339,5 +345,4 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 100);
         googleMap.animateCamera(cu);
     }
-
 }
