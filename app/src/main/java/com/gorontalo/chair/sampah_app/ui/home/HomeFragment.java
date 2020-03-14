@@ -182,9 +182,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         if (!mMarkers.containsKey(key)) {
             int tanki = Integer.parseInt(locationModel.getTanki());
             if (tanki >= 80 ){
-                mMarkers.put(key, gMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.defaultMarker())));
+                mMarkers.put(key, gMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.car))));
             }else{
-                mMarkers.put(key, gMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.defaultMarker())));
+                mMarkers.put(key, gMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.car2))));
             }
         } else {
             mMarkers.get(key).setPosition(location);
