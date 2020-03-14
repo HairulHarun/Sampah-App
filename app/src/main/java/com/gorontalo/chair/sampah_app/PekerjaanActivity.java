@@ -52,7 +52,7 @@ import java.util.Map;
 public class PekerjaanActivity extends AppCompatActivity {
     private static final String TAG = PekerjaanActivity.class.getSimpleName();
     private Intent intent;
-    private String id, nama;
+    private String id, id_pekerjaan, nama;
     private ImageView imgPhoto;
     private TextView txtNamaTps;
     private Button btnInsert, btnPilihPhoto;
@@ -70,6 +70,7 @@ public class PekerjaanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pekerjaan);
 
         intent = getIntent();
+        id_pekerjaan = intent.getStringExtra("id_pekerjaan");
         id = intent.getStringExtra("id_tps");
         nama = intent.getStringExtra("nama_tps");
 
@@ -194,6 +195,7 @@ public class PekerjaanActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new Hashtable<String, String>();
 
+                params.put("id_pekerjaan", id_pekerjaan);
                 params.put("id_petugas", sessionAdapter.getId());
                 params.put("id_tps", id);
                 params.put("latitude", sessionAdapter.getLatitude());

@@ -211,14 +211,16 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
                         JSONArray jsonArray = jObj.getJSONArray("hasil");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            String id_pekerjaan = jsonObject.getString("id");
                             String id_tps = jsonObject.getString("id_tps");
                             String lat_tps = jsonObject.getString("lat_tps");
                             String long_tps = jsonObject.getString("long_tps");
                             String nama_tps = jsonObject.getString("nama_tps");
                             String photo_tps = jsonObject.getString("photo_tps");
                             String deskripsi_tps = jsonObject.getString("deskripsi_tps");
+                            String status_pekerjaan = jsonObject.getString("status_pekerjaan");
 
-                            addMarker(googleMap, new LatLng(Double.valueOf(jsonObject.getString("lat_tps")), Double.valueOf(jsonObject.getString("long_tps"))), id_tps);
+                            addMarker(googleMap, new LatLng(Double.valueOf(jsonObject.getString("lat_tps")), Double.valueOf(jsonObject.getString("long_tps"))), id_tps, id_pekerjaan, status_pekerjaan);
                         }
 
                     } else {
@@ -248,16 +250,21 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         VolleyAdapter.getInstance().addToRequestQueue(strReq, "getPekerjaan");
     }
 
-    private void addMarker(GoogleMap googleMap, LatLng latlng, final String id) {
+    private void addMarker(GoogleMap googleMap, LatLng latlng, final String id, final String id_pekerjaan, String status) {
         markerOptions.position(latlng);
         markerOptions.title(id);
+
+        if (status.equals("1")){
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+        }else{
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+        }
         googleMap.addMarker(markerOptions);
-        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
-            public boolean onMarkerClick(Marker marker) {
-                TpsFragment bottomSheetFragment = new TpsFragment(marker.getTitle().toString());
+            public void onInfoWindowClick(Marker marker) {
+                TpsFragment bottomSheetFragment = new TpsFragment(marker.getTitle().toString(), id_pekerjaan);
                 bottomSheetFragment.show(getActivity().getSupportFragmentManager(), bottomSheetFragment.getTag());
-                return false;
             }
         });
     }
