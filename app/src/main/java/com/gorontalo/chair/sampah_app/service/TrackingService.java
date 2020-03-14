@@ -164,6 +164,8 @@ public class TrackingService extends Service implements LocationListener {
                                                             String.valueOf(location.getLongitude()),
                                                             sessionAdapter.getTanki());
 
+            sessionAdapter.setLatLong(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
+
             mDatabase.child("location_petugas").child(sessionAdapter.getId()).setValue(locationData);
             updateLokasi(sessionAdapter.getId(), String.valueOf(mLocation.getLatitude()), String.valueOf(mLocation.getLongitude()));
         }catch (NullPointerException e){

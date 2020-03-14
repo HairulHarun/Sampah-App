@@ -28,6 +28,8 @@ public class SessionAdapter {
     public static final String KEY_PHOTOKONDEKTUR2 = "photokondektur2";
     public static final String KEY_PHOTOKENDERAAN = "photokenderaan";
     public static final String KEY_TANKI = "tanki";
+    public static final String KEY_LATITUDE = "latitude";
+    public static final String KEY_LONGITUDE = "longitude";
 
     public SessionAdapter(Context context){
         this._context = context;
@@ -60,6 +62,13 @@ public class SessionAdapter {
         editor.putString(KEY_PHOTOKONDEKTUR2, photokondektur2);
         editor.putString(KEY_PHOTOKENDERAAN, photokenderaan);
         editor.putString(KEY_TANKI, tanki);
+        editor.commit();
+    }
+
+    public void setLatLong(String latitude, String longitude){
+        editor.putBoolean(IS_LOGIN, true);
+        editor.putString(KEY_LATITUDE, latitude);
+        editor.putString(KEY_LONGITUDE, longitude);
         editor.commit();
     }
 
@@ -143,6 +152,16 @@ public class SessionAdapter {
 
     public String getTanki(){
         String user = pref.getString(KEY_TANKI, null);
+        return user;
+    }
+
+    public String getLatitude(){
+        String user = pref.getString(KEY_LATITUDE, null);
+        return user;
+    }
+
+    public String getLongitude(){
+        String user = pref.getString(KEY_LONGITUDE, null);
         return user;
     }
 

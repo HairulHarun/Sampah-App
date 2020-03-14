@@ -23,6 +23,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.gorontalo.chair.sampah_app.MainActivity;
+import com.gorontalo.chair.sampah_app.PekerjaanActivity;
 import com.gorontalo.chair.sampah_app.R;
 import com.gorontalo.chair.sampah_app.adapter.HttpsTrustManagerAdapter;
 import com.gorontalo.chair.sampah_app.adapter.URLAdapter;
@@ -85,7 +86,7 @@ public class TpsFragment extends BottomSheetDialogFragment {
                     JSONObject jObj = new JSONObject(response);
                     int success = jObj.getInt("success");
                     if (success == 1) {
-                        String nama_tps = jObj.getString("nama");
+                        final String nama_tps = jObj.getString("nama");
                         String photo_tps = jObj.getString("photo");
                         String deskripsi_tps = jObj.getString("deskripsi");
 
@@ -103,7 +104,12 @@ public class TpsFragment extends BottomSheetDialogFragment {
                         btnAngkut.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-
+                                Intent intent = new Intent(getActivity().getApplicationContext(), PekerjaanActivity.class);
+                                intent.putExtra("id_tps", ID);
+                                intent.putExtra("nama_tps", nama_tps);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
                             }
                         });
                     } else {

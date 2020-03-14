@@ -252,12 +252,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         markerOptions.position(latlng);
         markerOptions.title(id);
         googleMap.addMarker(markerOptions);
-
-        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-            public void onInfoWindowClick(Marker marker) {
+            public boolean onMarkerClick(Marker marker) {
                 TpsFragment bottomSheetFragment = new TpsFragment(marker.getTitle().toString());
                 bottomSheetFragment.show(getActivity().getSupportFragmentManager(), bottomSheetFragment.getTag());
+                return false;
             }
         });
     }
