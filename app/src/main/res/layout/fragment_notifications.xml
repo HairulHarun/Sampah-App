@@ -60,7 +60,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:text="Copyright @Aplikasi Kurir-App 2019"
+            android:text="Copyright @Aplikasi Sampah-App 2019"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/colorRed" />
 
