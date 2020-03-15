@@ -72,6 +72,12 @@ public class SessionAdapter {
         editor.commit();
     }
 
+    public void setTanki(String tanki){
+        editor.putBoolean(IS_LOGIN, true);
+        editor.putString(KEY_TANKI, tanki);
+        editor.commit();
+    }
+
     public void createDialogSession(){
         editor.putBoolean(IS_SHOW, true);
         editor.commit();
