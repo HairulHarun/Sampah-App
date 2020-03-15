@@ -17,6 +17,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import com.gorontalo.chair.sampah_app.LoginActivity;
 import com.gorontalo.chair.sampah_app.R;
+import com.gorontalo.chair.sampah_app.UserActivity;
 import com.gorontalo.chair.sampah_app.adapter.SessionAdapter;
 import com.gorontalo.chair.sampah_app.adapter.URLAdapter;
 import com.squareup.picasso.MemoryPolicy;
@@ -93,7 +94,7 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 sessionAdapter.logoutUser();
-                startActivity(new Intent(getActivity(), LoginActivity.class));
+                startActivity(new Intent(getActivity(), UserActivity.class));
             }
         });
 

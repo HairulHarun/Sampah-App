@@ -156,13 +156,15 @@ public class TrackingService extends Service implements LocationListener {
     public void onLocationChanged(Location location) {
         try{
             this.mLocation = location;
-            LocationModel locationData = new LocationModel(sessionAdapter.getSopir(),
+            LocationModel locationData = new LocationModel(sessionAdapter.getId(),
+                                                            sessionAdapter.getSopir(),
                                                             sessionAdapter.getKondektur1(),
                                                             sessionAdapter.getKondektur2(),
                                                             sessionAdapter.getKenderaan(),
                                                             String.valueOf(location.getLatitude()),
                                                             String.valueOf(location.getLongitude()),
-                                                            sessionAdapter.getTanki());
+                                                            sessionAdapter.getTanki(),
+                                                            sessionAdapter.getPhotoKenderaan());
 
             sessionAdapter.setLatLong(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
 

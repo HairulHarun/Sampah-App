@@ -48,6 +48,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.gorontalo.chair.sampah_app.MainActivity;
 import com.gorontalo.chair.sampah_app.R;
 import com.gorontalo.chair.sampah_app.adapter.HttpsTrustManagerAdapter;
@@ -131,7 +132,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
             public void onComplete(Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     try {
-                        addMarkersToMap();
+//                        addMarkersToMap();
+                        subscribeToUpdates();
                     }catch (IllegalStateException | NullPointerException e){
                         Log.d("Main Activity", "Error Fragment");
                     }
@@ -139,6 +141,48 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
                 } else {
                     Log.d(TAG, "firebase auth failed");
                 }
+            }
+        });
+    }
+
+    private void subscribeToUpdates() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("location_petugas/");
+        ref.child(sessionAdapter.getId().toString()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try{
+                    LocationModel locations = dataSnapshot.getValue(LocationModel.class);
+
+                    String key = dataSnapshot.getKey();
+                    double lat = Double.parseDouble(locations.getLatitude());
+                    double lng = Double.parseDouble(locations.getLongitude());
+
+                    LatLng location = new LatLng(lat, lng);
+                    if (!mMarkers.containsKey(key)) {
+                        int tanki = Integer.parseInt(locations.getTanki());
+                        if (tanki >= 80 ){
+                            mMarkers.put(key, gMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.car))));
+                        }else{
+                            mMarkers.put(key, gMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.car2))));
+                        }
+                    } else {
+                        mMarkers.get(key).setPosition(location);
+                    }
+                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                    for (Marker marker : mMarkers.values()) {
+                        builder.include(marker.getPosition());
+                    }
+                    gMap.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 300));
+
+                }catch (NullPointerException e){
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("tmz", "Failed to read value.", error.toException());
             }
         });
     }
@@ -194,7 +238,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         for (Marker marker : mMarkers.values()) {
             builder.include(marker.getPosition());
         }
-
     }
 
     private void getPekerjaan(final GoogleMap googleMap) {

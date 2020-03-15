@@ -18,7 +18,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PekerjaanActivity"></activity>
+        <activity
+            android:name=".LaporActivity"
+            android:label="@string/title_activity_lapor"
+            android:parentActivityName=".UserActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gorontalo.chair.sampah_app.UserActivity" />
+        </activity>
+        <activity android:name=".UserActivity" />
+        <activity android:name=".PekerjaanActivity" />
 
         <service
             android:name=".service.TrackingService"

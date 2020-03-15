@@ -3,12 +3,13 @@ package com.gorontalo.chair.sampah_app.model;
 import java.io.Serializable;
 
 public class LocationModel implements Serializable {
-    private String id, sopir, kondektur1, kondektur2, kenderaan, latitude, longitude, tanki;
+    private String id, sopir, kondektur1, kondektur2, kenderaan, latitude, longitude, tanki, photo;
 
     public LocationModel() {
     }
 
-    public LocationModel(String sopir, String kondektur1, String kondektur2, String kenderaan, String latitude, String longitude, String tanki) {
+    public LocationModel(String id, String sopir, String kondektur1, String kondektur2, String kenderaan, String latitude, String longitude, String tanki, String photo) {
+        this.id = id;
         this.sopir = sopir;
         this.kondektur1 = kondektur1;
         this.kondektur2 = kondektur2;
@@ -16,6 +17,7 @@ public class LocationModel implements Serializable {
         this.latitude = latitude;
         this.longitude = longitude;
         this.tanki = tanki;
+        this.photo = photo;
     }
 
     public String getId() {
@@ -80,5 +82,13 @@ public class LocationModel implements Serializable {
 
     public void setTanki(String tanki) {
         this.tanki = tanki;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

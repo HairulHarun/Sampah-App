@@ -17,7 +17,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 //TODO Auto-generated method stub
-                Intent i = new Intent(SplashActivity.this, LoginActivity.class);
+                Intent i = new Intent(SplashActivity.this, UserActivity.class);
                 startActivity(i);
                 //jeda selesai Splashscreen
                 this.finish();
