@@ -78,6 +78,9 @@ public class PetugasFragment extends BottomSheetDialogFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), LaporActivity.class);
                 intent.putExtra("id_petugas", ID);
+                intent.putExtra("kenderaan", KENDERAAN);
+                intent.putExtra("sopir", SOPIR);
+                intent.putExtra("photo", PHOTO);
                 startActivity(intent);
             }
         });

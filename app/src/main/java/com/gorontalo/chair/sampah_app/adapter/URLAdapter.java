@@ -31,6 +31,10 @@ public class URLAdapter {
         return URL = URL+"ws-simpan-logpekerjaan.php";
     }
 
+    public String simpanLaporan(){
+        return URL = URL+"ws-simpan-laporan.php";
+    }
+
     public String getPhotoPetugas(String photo){
         return URL = URL_PHOTO+"/petugas/"+photo;
     }
