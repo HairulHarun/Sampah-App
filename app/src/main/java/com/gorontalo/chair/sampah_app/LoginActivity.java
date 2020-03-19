@@ -203,6 +203,7 @@ public class LoginActivity extends AppCompatActivity {
                                                              photokondektur2,
                                                              photokenderaan,
                                                              tanki);
+                        sessionAdapter.setLatLong("0.6246633754670272", "122.97941207885742");
 
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

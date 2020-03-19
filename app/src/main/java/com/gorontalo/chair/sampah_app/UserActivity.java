@@ -53,10 +53,7 @@ public class UserActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_lapor) {
-            startActivity(new Intent(UserActivity.this, LaporActivity.class));
-            return true;
-        }else if (id == R.id.action_login) {
+        if (id == R.id.action_login) {
             startActivity(new Intent(UserActivity.this, LoginActivity.class));
         }
 

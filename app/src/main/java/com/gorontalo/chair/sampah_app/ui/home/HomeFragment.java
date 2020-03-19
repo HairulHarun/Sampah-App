@@ -187,59 +187,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         });
     }
 
-    private void addMarkersToMap(){
-        mProfileRef = FirebaseDatabase.getInstance().getReference("location_petugas/");
-        mChildEventListener = mProfileRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                setMarker(dataSnapshot);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                setMarker(dataSnapshot);
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void setMarker(DataSnapshot dataSnapshot) {
-        String key = dataSnapshot.getKey();
-        LocationModel locationModel = dataSnapshot.getValue(LocationModel.class);
-        String latitude = locationModel.getLatitude();
-        String longitude = locationModel.getLongitude();
-        LatLng location = new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude));
-
-        if (!mMarkers.containsKey(key)) {
-            int tanki = Integer.parseInt(locationModel.getTanki());
-            if (tanki >= 80 ){
-                mMarkers.put(key, gMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.car))));
-            }else{
-                mMarkers.put(key, gMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.car2))));
-            }
-        } else {
-            mMarkers.get(key).setPosition(location);
-        }
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-
-        for (Marker marker : mMarkers.values()) {
-            builder.include(marker.getPosition());
-        }
-    }
-
     private void getPekerjaan(final GoogleMap googleMap) {
         HttpsTrustManagerAdapter.allowAllSSL();
         StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().getPekerjaan(), new Response.Listener<String>() {
@@ -251,6 +198,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
                     JSONObject jObj = new JSONObject(response);
                     int success = jObj.getInt("success");
                     if (success == 1) {
+                        String lat_tpa = jObj.getString("lat_tpa");
+                        String long_tpa = jObj.getString("long_tpa");
+                        String nama_tpa = jObj.getString("nama_tpa");
+
+                        addMarkerTPA(googleMap, new LatLng(Double.valueOf(lat_tpa), Double.valueOf(long_tpa)), nama_tpa);
+
                         JSONArray jsonArray = jObj.getJSONArray("hasil");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -263,7 +216,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
                             String deskripsi_tps = jsonObject.getString("deskripsi_tps");
                             String status_pekerjaan = jsonObject.getString("status_pekerjaan");
 
-                            addMarker(googleMap, new LatLng(Double.valueOf(jsonObject.getString("lat_tps")), Double.valueOf(jsonObject.getString("long_tps"))), id_tps, id_pekerjaan, status_pekerjaan);
+                            addMarker(googleMap, new LatLng(Double.valueOf(jsonObject.getString("lat_tps")), Double.valueOf(jsonObject.getString("long_tps"))), id_tps, status_pekerjaan);
                         }
 
                     } else {
@@ -293,7 +246,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         VolleyAdapter.getInstance().addToRequestQueue(strReq, "getPekerjaan");
     }
 
-    private void addMarker(GoogleMap googleMap, LatLng latlng, final String id, final String id_pekerjaan, String status) {
+    private void addMarker(GoogleMap googleMap, LatLng latlng, final String id, String status) {
         markerOptions.position(latlng);
         markerOptions.title(id);
 
@@ -302,14 +255,22 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         }else{
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         }
+
         googleMap.addMarker(markerOptions);
         googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                TpsFragment bottomSheetFragment = new TpsFragment(marker.getTitle().toString(), id_pekerjaan);
+                TpsFragment bottomSheetFragment = new TpsFragment(marker.getTitle().toString());
                 bottomSheetFragment.show(getActivity().getSupportFragmentManager(), bottomSheetFragment.getTag());
             }
         });
+    }
+
+    private void addMarkerTPA(GoogleMap googleMap, LatLng latlng, final String nama) {
+        markerOptions.position(latlng);
+        markerOptions.title(nama);
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+        googleMap.addMarker(markerOptions);
     }
 
     private void getRute(final GoogleMap googleMap) {

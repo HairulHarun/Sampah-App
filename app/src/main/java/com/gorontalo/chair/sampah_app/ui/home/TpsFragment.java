@@ -43,7 +43,7 @@ import java.util.Map;
 
 public class TpsFragment extends BottomSheetDialogFragment {
     private static final String TAG = MainActivity.class.getSimpleName();
-    private String ID, ID_PEKERJAAN;
+    private String ID;
     private TextView txtTpsNama, txtTpsDeskripsi;
     private Button btnAngkut;
     private CircleImageView photoTps;
@@ -52,9 +52,8 @@ public class TpsFragment extends BottomSheetDialogFragment {
         // Required empty public constructor
     }
 
-    public TpsFragment(String id_tps, String id_pekerjaan){
+    public TpsFragment(String id_tps){
         this.ID = id_tps;
-        this.ID_PEKERJAAN = id_pekerjaan;
     }
 
     @Override
@@ -107,7 +106,6 @@ public class TpsFragment extends BottomSheetDialogFragment {
                             public void onClick(View v) {
                                 Intent intent = new Intent(getActivity().getApplicationContext(), PekerjaanActivity.class);
                                 intent.putExtra("id_tps", ID);
-                                intent.putExtra("id_pekerjaan", ID_PEKERJAAN);
                                 intent.putExtra("nama_tps", nama_tps);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
