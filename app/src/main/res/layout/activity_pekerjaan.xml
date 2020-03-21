@@ -14,7 +14,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -29,7 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorPrimary"
-                    android:padding="10dp"
+                    android:padding="15dp"
                     android:text="Pilih Foto"
                     android:textColor="@color/colorWhite"
                     android:textSize="16sp"
@@ -39,6 +38,7 @@
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:text="Catatan : (Foto Setelah Pengangkutan Sampah)"
                     android:textColor="@color/colorWhite"
@@ -54,14 +54,15 @@
                         android:id="@+id/imgPilihFoto"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:layout_marginBottom="20dp"
                         android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
                         app:srcCompat="@mipmap/ic_launcher_round" />
 
                     <Button
                         android:id="@+id/btnPilihPhoto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
                         android:background="@color/colorPrimaryDark"
                         android:text="Pilih Foto"
                         android:textColor="@color/colorWhite" />
@@ -73,7 +74,7 @@
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_margin="10dp"
                 android:text="Tanki Mobil Saat Ini" />
 
             <TextView
@@ -81,20 +82,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:visibility="gone"
-                android:text="0" />
+                android:text="0"
+                android:visibility="gone" />
 
             <SeekBar
                 android:id="@+id/seekBarTanki"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:padding="10dp" />
 
             <Button
                 android:id="@+id/btnInsert"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_margin="10dp"
                 android:layout_marginBottom="20dp"
                 android:background="@color/colorPrimaryDark"
                 android:text="Kirim Data"

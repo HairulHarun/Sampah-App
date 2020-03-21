@@ -94,7 +94,6 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 sessionAdapter.logoutUser();
-                startActivity(new Intent(getActivity(), UserActivity.class));
             }
         });
 

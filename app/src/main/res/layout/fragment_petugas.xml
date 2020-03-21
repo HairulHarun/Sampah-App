@@ -45,7 +45,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/profile_layout"
-            android:layout_alignParentBottom="true"
             android:background="@color/colorWhite"
             android:orientation="vertical"
             android:padding="10dp">
@@ -119,14 +118,6 @@
                 android:clickable="true"
                 android:elevation="4dp"
                 android:text="Android Profile UI Design" />
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="@color/colorPrimaryDark" />
 
             <View
                 android:layout_width="fill_parent"

@@ -28,7 +28,7 @@
                 android:value="com.gorontalo.chair.sampah_app.UserActivity" />
         </activity>
         <activity android:name=".UserActivity" />
-        <activity android:name=".PekerjaanActivity" />
+        <activity android:name=".PekerjaanActivity" android:theme="@style/AppTheme.NoActionBar"/>
 
         <service
             android:name=".service.TrackingService"

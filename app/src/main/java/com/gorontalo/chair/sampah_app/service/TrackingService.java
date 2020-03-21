@@ -66,7 +66,7 @@ public class TrackingService extends Service implements LocationListener {
     public void onCreate() {
         super.onCreate();
 
-        Toast.makeText(getApplicationContext(), "Service is started !", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(), "Service is started !", Toast.LENGTH_SHORT).show();
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

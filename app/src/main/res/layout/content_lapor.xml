@@ -16,7 +16,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -30,7 +29,7 @@
                     android:id="@+id/txtLaporanNamaPetugas"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorPrimary"
+                    android:background="@color/colorAccent"
                     android:padding="10dp"
                     android:text="Nama Petugas"
                     android:textColor="@color/colorWhite"
@@ -64,6 +63,7 @@
                         android:id="@+id/btnPilihPhoto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
                         android:background="@color/colorPrimaryDark"
                         android:text="Pilih Foto"
                         android:textColor="@color/colorWhite" />

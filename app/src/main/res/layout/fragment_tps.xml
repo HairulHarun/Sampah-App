@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tps_photo"
                 android:layout_centerHorizontal="true"
-                android:text="TPS Apa"
+                android:text="Mengambil Nama TPS ..."
                 android:textColor="@color/colorWhite"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -67,7 +67,7 @@
                 android:layout_margin="5dp"
                 android:clickable="true"
                 android:elevation="4dp"
-                android:text="Android Profile UI Design" />
+                android:text="Mengamdil Data ...." />
 
             <Button
                 android:id="@+id/btnTpsAngkut"
