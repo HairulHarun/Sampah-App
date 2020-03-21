@@ -173,6 +173,7 @@ public class SessionAdapter {
 
     public void logoutUser(){
         // Clearing all data from Shared Preferences
+        editor.putBoolean(IS_LOGIN, false);
         editor.clear();
         editor.commit();
 

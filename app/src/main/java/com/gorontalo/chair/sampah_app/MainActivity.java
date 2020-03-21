@@ -19,6 +19,7 @@ import androidx.navigation.ui.NavigationUI;
 public class MainActivity extends AppCompatActivity {
     Intent mServiceIntent;
     private TrackingService myService;
+    private SessionAdapter sessionAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
         if (!isMyServiceRunning(myService.getClass())) {
             startService(mServiceIntent);
         }
+
+        sessionAdapter = new SessionAdapter(getApplicationContext());
+        sessionAdapter.checkLoginMain();
     }
 
     @Override
