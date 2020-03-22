@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/photo_petugas"
                 android:layout_centerHorizontal="true"
-                android:text="Toyota Hino"
+                android:text="@string/ambildata"
                 android:textColor="@color/colorWhite"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -65,7 +65,7 @@
                 android:layout_margin="5dp"
                 android:clickable="true"
                 android:elevation="4dp"
-                android:text="Android Profile UI Design" />
+                android:text="@string/ambildata" />
 
             <View
                 android:layout_width="fill_parent"
@@ -91,7 +91,7 @@
                 android:layout_margin="5dp"
                 android:clickable="true"
                 android:elevation="4dp"
-                android:text="Android Profile UI Design" />
+                android:text="@string/ambildata" />
 
             <View
                 android:layout_width="fill_parent"
@@ -117,7 +117,7 @@
                 android:layout_margin="5dp"
                 android:clickable="true"
                 android:elevation="4dp"
-                android:text="Android Profile UI Design" />
+                android:text="@string/ambildata" />
 
             <View
                 android:layout_width="fill_parent"
@@ -143,7 +143,7 @@
                 android:layout_margin="5dp"
                 android:clickable="true"
                 android:elevation="4dp"
-                android:text="Android Profile UI Design" />
+                android:text="@string/ambildata" />
 
             <Button
                 android:id="@+id/btnLapor"

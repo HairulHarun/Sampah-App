@@ -8,37 +8,44 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.gorontalo.chair.sampah_app.adapter.HttpsTrustManagerAdapter;
 import com.gorontalo.chair.sampah_app.adapter.URLAdapter;
+import com.gorontalo.chair.sampah_app.adapter.VolleyAdapter;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class PetugasFragment extends BottomSheetDialogFragment {
+    private static final String TAG = MainActivity.class.getSimpleName();
     private TextView txtSopir, txtKondektur1, txtKondektur2, txtKenderaan, txtTanki;
     private Button btnLapor;
     private CircleImageView photoKenderaan;
-    private String ID, SOPIR, KONDEKTUR1, KONDEKTUR2, KENDERAAN, PHOTO;
-    private int TANKI;
+    private String ID;
 
     public PetugasFragment() {
         // Required empty public constructor
     }
 
-    public PetugasFragment(String id, String sopir, String kondektur1, String kondektur2, String kenderaan, int tanki, String photo){
+    public PetugasFragment(String id){
         this.ID = id;
-        this.SOPIR = sopir;
-        this.KONDEKTUR1 = kondektur1;
-        this.KONDEKTUR2 = kondektur2;
-        this.KENDERAAN = kenderaan;
-        this.TANKI = tanki;
-        this.PHOTO = photo;
     }
 
     @Override
@@ -59,31 +66,7 @@ public class PetugasFragment extends BottomSheetDialogFragment {
 
         photoKenderaan = root.findViewById(R.id.photo_petugas);
 
-        txtSopir.setText(SOPIR);
-        txtKondektur1.setText(KONDEKTUR1);
-        txtKondektur2.setText(KONDEKTUR2);
-        txtKenderaan.setText(KENDERAAN);
-        txtTanki.setText(String.valueOf(TANKI));
-
-        Picasso.with(getActivity().getApplicationContext())
-                .load(new URLAdapter().getPhotoPetugas(PHOTO))
-                .placeholder(R.mipmap.ic_launcher_round)
-                .error(R.mipmap.ic_launcher_round)
-                .memoryPolicy(MemoryPolicy.NO_CACHE)
-                .networkPolicy(NetworkPolicy.NO_CACHE)
-                .into(photoKenderaan);
-
-        btnLapor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplicationContext(), LaporActivity.class);
-                intent.putExtra("id_petugas", ID);
-                intent.putExtra("kenderaan", KENDERAAN);
-                intent.putExtra("sopir", SOPIR);
-                intent.putExtra("photo", PHOTO);
-                startActivity(intent);
-            }
-        });
+        getPetugasById(ID);
 
         return root;
     }
@@ -96,5 +79,76 @@ public class PetugasFragment extends BottomSheetDialogFragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    private void getPetugasById(final String id) {
+        HttpsTrustManagerAdapter.allowAllSSL();
+        StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().getPetugasByID(), new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.e(TAG, "Data Response: " + response);
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    int success = jObj.getInt("success");
+                    if (success == 1) {
+                        final String sopir = jObj.getString("sopir");
+                        String kondektur1 = jObj.getString("kondektur1");
+                        String kondektur2 = jObj.getString("kondektur2");
+                        final String kenderaan = jObj.getString("kenderaan");
+                        String tanki = jObj.getString("tanki");
+                        final String photo = jObj.getString("photokenderaan");
+
+                        txtSopir.setText(sopir);
+                        txtKondektur1.setText(kondektur1);
+                        txtKondektur2.setText(kondektur2);
+                        txtKenderaan.setText(kenderaan);
+                        txtTanki.setText(String.valueOf(tanki));
+
+                        Picasso.with(getActivity().getApplicationContext())
+                                .load(new URLAdapter().getPhotoPetugas(photo))
+                                .placeholder(R.mipmap.ic_launcher_round)
+                                .error(R.mipmap.ic_launcher_round)
+                                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                                .networkPolicy(NetworkPolicy.NO_CACHE)
+                                .into(photoKenderaan);
+
+                        btnLapor.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getActivity().getApplicationContext(), LaporActivity.class);
+                                intent.putExtra("id_petugas", ID);
+                                intent.putExtra("kenderaan", kenderaan);
+                                intent.putExtra("sopir", sopir);
+                                intent.putExtra("photo", photo);
+                                startActivity(intent);
+                            }
+                        });
+
+                    } else {
+                        Log.e(TAG, jObj.getString("hasil"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Get Data Error rute: " + error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id", id);
+
+                return params;
+            }
+        };
+
+        VolleyAdapter.getInstance().addToRequestQueue(strReq, "getPekerjaan");
     }
 }

@@ -15,12 +15,20 @@ public class URLAdapter {
         return URL = URL+"ws-get-pekerjaan.php";
     }
 
+    public String getAllPekerjaan(){
+        return URL = URL+"ws-get-allpekerjaan.php";
+    }
+
     public String getRute(){
         return URL = URL+"ws-get-rute.php";
     }
 
     public String getTPSByID(){
         return URL = URL+"ws-get-tps-id.php";
+    }
+
+    public String getPetugasByID(){
+        return URL = URL+"ws-get-petugas-id.php";
     }
 
     public String updateLokasiPetugas(){
