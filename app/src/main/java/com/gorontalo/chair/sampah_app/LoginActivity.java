@@ -276,4 +276,8 @@ public class LoginActivity extends AppCompatActivity {
         intent.setData(uri);
         startActivityForResult(intent, 101);
     }
+
+    public void onBackPressed(){
+        moveTaskToBack(true);
+    }
 }
