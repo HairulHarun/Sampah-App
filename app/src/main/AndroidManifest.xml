@@ -19,6 +19,15 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".LaporTpsActivity"
+            android:label="@string/title_activity_lapor_tps"
+            android:parentActivityName=".UserActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gorontalo.chair.sampah_app.UserActivity" />
+        </activity>
+        <activity
             android:name=".LaporActivity"
             android:label="@string/title_activity_lapor"
             android:parentActivityName=".UserActivity"
@@ -28,7 +37,9 @@
                 android:value="com.gorontalo.chair.sampah_app.UserActivity" />
         </activity>
         <activity android:name=".UserActivity" />
-        <activity android:name=".PekerjaanActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".PekerjaanActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service
             android:name=".service.TrackingService"
@@ -58,10 +69,15 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main" />
-        <activity android:name=".LoginActivity" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SplashActivity" android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

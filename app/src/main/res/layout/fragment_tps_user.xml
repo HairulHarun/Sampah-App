@@ -69,6 +69,15 @@
                 android:elevation="4dp"
                 android:text="Mengamdil Data ...." />
 
+            <Button
+                android:id="@+id/btnLapor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/colorPrimaryDark"
+                android:text="Lapor TPS"
+                android:textColor="@color/colorWhite" />
+
         </LinearLayout>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

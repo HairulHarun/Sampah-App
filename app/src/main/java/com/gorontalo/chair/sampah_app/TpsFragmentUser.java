@@ -33,6 +33,7 @@ public class TpsFragmentUser extends BottomSheetDialogFragment {
     private static final String TAG = MainActivity.class.getSimpleName();
     private String ID;
     private TextView txtTpsNama, txtTpsDeskripsi;
+    private Button btnLapor;
     private CircleImageView photoTps;
 
     public TpsFragmentUser() {
@@ -55,6 +56,7 @@ public class TpsFragmentUser extends BottomSheetDialogFragment {
         txtTpsNama = (TextView) view.findViewById(R.id.txtTpsNama);
         txtTpsDeskripsi = (TextView) view.findViewById(R.id.txtTpsDeskripsi);
         photoTps = view.findViewById(R.id.tps_photo);
+        btnLapor = (Button) view.findViewById(R.id.btnLapor);
 
         getTPSById(ID);
 
@@ -73,7 +75,7 @@ public class TpsFragmentUser extends BottomSheetDialogFragment {
                     int success = jObj.getInt("success");
                     if (success == 1) {
                         final String nama_tps = jObj.getString("nama");
-                        String photo_tps = jObj.getString("photo");
+                        final String photo_tps = jObj.getString("photo");
                         String deskripsi_tps = jObj.getString("deskripsi");
 
                         txtTpsNama.setText(nama_tps);
@@ -86,6 +88,17 @@ public class TpsFragmentUser extends BottomSheetDialogFragment {
                                 .memoryPolicy(MemoryPolicy.NO_CACHE)
                                 .networkPolicy(NetworkPolicy.NO_CACHE)
                                 .into(photoTps);
+
+                        btnLapor.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getActivity().getApplicationContext(), LaporTpsActivity.class);
+                                intent.putExtra("id_tps", ID);
+                                intent.putExtra("nama_tps", nama_tps);
+                                intent.putExtra("photo", photo_tps);
+                                startActivity(intent);
+                            }
+                        });
                     } else {
                         Log.e(TAG, jObj.getString("hasil"));
                     }
