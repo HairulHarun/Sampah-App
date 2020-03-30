@@ -251,9 +251,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         markerOptions.title(id);
 
         if (status.equals("1")){
-            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.empty));
+            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.tps));
         }else{
-            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.full));
+            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.tpsfull));
         }
 
         googleMap.addMarker(markerOptions);
