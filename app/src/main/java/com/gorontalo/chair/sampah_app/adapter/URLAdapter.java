@@ -23,6 +23,10 @@ public class URLAdapter {
         return URL = URL+"ws-get-rute.php";
     }
 
+    public String getPengumuman(){
+        return URL = URL+"ws-get-pengumuman.php";
+    }
+
     public String getTPSByID(){
         return URL = URL+"ws-get-tps-id.php";
     }

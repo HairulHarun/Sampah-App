@@ -69,6 +69,8 @@ public class UserActivity extends AppCompatActivity implements OnMapReadyCallbac
         int id = item.getItemId();
         if (id == R.id.action_login) {
             startActivity(new Intent(UserActivity.this, LoginActivity.class));
+        }else if (id == R.id.action_pengumuman) {
+            startActivity(new Intent(UserActivity.this, PengumumanActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
