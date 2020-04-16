@@ -67,6 +67,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class HomeFragment extends Fragment implements OnMapReadyCallback{
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -330,8 +331,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
     }
 
     public void drawPolyLineOnMap(GoogleMap googleMap, List<LatLng> list) {
+        Random rnd = new Random();
+        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+
         PolylineOptions polyOptions = new PolylineOptions();
-        polyOptions.color(Color.BLUE);
+        polyOptions.color(color);
         polyOptions.width(8);
         polyOptions.addAll(list);
 

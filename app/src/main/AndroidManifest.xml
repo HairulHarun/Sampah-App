@@ -18,6 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".PengumumanActivity"></activity>
         <activity
             android:name=".LaporTpsActivity"
             android:label="@string/title_activity_lapor_tps"
