@@ -277,6 +277,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onBackPressed(){
-        moveTaskToBack(true);
+        startActivity(new Intent(LoginActivity.this, UserActivity.class));
     }
 }

@@ -27,6 +27,10 @@ public class URLAdapter {
         return URL = URL+"ws-get-pengumuman.php";
     }
 
+    public String getLastPengumuman(){
+        return URL = URL+"ws-get-last-pengumuman.php";
+    }
+
     public String getTPSByID(){
         return URL = URL+"ws-get-tps-id.php";
     }

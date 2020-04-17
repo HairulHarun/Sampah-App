@@ -3,16 +3,19 @@ package com.gorontalo.chair.sampah_app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -22,6 +25,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -40,19 +44,30 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class UserActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     private static final String TAG = UserActivity.class.getSimpleName();
     private HashMap<String, Marker> mMarkers = new HashMap<>();
     private SupportMapFragment mapFragment;
     private Marker markerPetugas, markerTps, markerTPA;
+    private List<String> dataPetugas = new ArrayList<>();
+    private TextView txtPengumuman;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+
+        txtPengumuman = (TextView) findViewById(R.id.txtPengumuman);
+        getPengumuman();
+
+        dataPetugas.add("1");
+        dataPetugas.add("2");
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -85,6 +100,12 @@ public class UserActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             loginToFirebase(googleMap);
             getPekerjaan(googleMap);
+
+            for (int i = 1; i <= dataPetugas.size(); i++){
+                getRute(googleMap, dataPetugas.get(i));
+                Toast.makeText(getApplicationContext(), "Pengumuman "+i, Toast.LENGTH_SHORT).show();
+            }
+
         }catch (NullPointerException e){
 
         }
@@ -257,6 +278,120 @@ public class UserActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         googleMap.addMarker(markerOptions);
         googleMap.setOnMarkerClickListener(this);
+    }
+
+    private void getRute(final GoogleMap googleMap, final String id_petugas) {
+        HttpsTrustManagerAdapter.allowAllSSL();
+        StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().getRute(), new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.e(TAG, "Data Response: " + response);
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    int success = jObj.getInt("success");
+                    if (success == 1) {
+                        JSONArray jsonArray = jObj.getJSONArray("hasil");
+                        List<LatLng> position = new ArrayList<>();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            try {
+                                JSONObject obj = jsonArray.getJSONObject(i);
+
+                                String id_rute = obj.getString("id");
+                                String id_petugas = obj.getString("id_petugas");
+                                double lat_rute = Double.valueOf(obj.getString("lat_rute"));
+                                double long_rute = Double.valueOf(obj.getString("long_rute"));
+
+                                position.add(new LatLng(lat_rute, long_rute));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        drawPolyLineOnMap(googleMap, position);
+                    } else {
+                        Log.e(TAG, jObj.getString("hasil"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Get Data Error rute: " + error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id_petugas", id_petugas);
+                return params;
+            }
+        };
+
+        VolleyAdapter.getInstance().addToRequestQueue(strReq, "getPekerjaan");
+    }
+
+    public void drawPolyLineOnMap(GoogleMap googleMap, List<LatLng> list) {
+        Random rnd = new Random();
+        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+
+        PolylineOptions polyOptions = new PolylineOptions();
+        polyOptions.color(color);
+        polyOptions.width(8);
+        polyOptions.addAll(list);
+
+//        googleMap.clear();
+        googleMap.addPolyline(polyOptions);
+
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        for (LatLng latLng : list) {
+            builder.include(latLng);
+        }
+
+        final LatLngBounds bounds = builder.build();
+    }
+
+    private void getPengumuman() {
+        HttpsTrustManagerAdapter.allowAllSSL();
+        StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().getLastPengumuman(), new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.e(TAG, "Data Response: " + response);
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    int success = jObj.getInt("success");
+                    if (success == 1) {
+                        String isi = jObj.getString("isi_pengumuman");
+                        txtPengumuman.setText(isi);
+                    } else {
+                        Log.e(TAG, jObj.getString("hasil"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Get Data Error Pengumuman: " + error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+        };
+
+        VolleyAdapter.getInstance().addToRequestQueue(strReq, "getPekerjaan");
     }
 
     @Override
