@@ -55,7 +55,6 @@ public class UserActivity extends AppCompatActivity implements OnMapReadyCallbac
     private HashMap<String, Marker> mMarkers = new HashMap<>();
     private SupportMapFragment mapFragment;
     private Marker markerPetugas, markerTps, markerTPA;
-    private List<String> dataPetugas = new ArrayList<>();
     private TextView txtPengumuman;
 
     @Override
@@ -65,9 +64,6 @@ public class UserActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         txtPengumuman = (TextView) findViewById(R.id.txtPengumuman);
         getPengumuman();
-
-        dataPetugas.add("1");
-        dataPetugas.add("2");
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -101,9 +97,10 @@ public class UserActivity extends AppCompatActivity implements OnMapReadyCallbac
             loginToFirebase(googleMap);
             getPekerjaan(googleMap);
 
-            for (int i = 1; i <= dataPetugas.size(); i++){
-                getRute(googleMap, dataPetugas.get(i));
-                Toast.makeText(getApplicationContext(), "Pengumuman "+i, Toast.LENGTH_SHORT).show();
+            String[] dataPetugas = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
+
+            for (int i = 0; i < dataPetugas.length; i++){
+                getRute(googleMap, dataPetugas[i]);
             }
 
         }catch (NullPointerException e){
@@ -366,7 +363,7 @@ public class UserActivity extends AppCompatActivity implements OnMapReadyCallbac
                     JSONObject jObj = new JSONObject(response);
                     int success = jObj.getInt("success");
                     if (success == 1) {
-                        String isi = jObj.getString("isi_pengumuman");
+                        String isi = jObj.getString("hasil");
                         txtPengumuman.setText(isi);
                     } else {
                         Log.e(TAG, jObj.getString("hasil"));
