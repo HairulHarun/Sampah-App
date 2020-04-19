@@ -365,6 +365,7 @@ public class UserActivity extends AppCompatActivity implements OnMapReadyCallbac
                     if (success == 1) {
                         String isi = jObj.getString("hasil");
                         txtPengumuman.setText(isi);
+                        txtPengumuman.setSelected(true);
                     } else {
                         Log.e(TAG, jObj.getString("hasil"));
                     }
