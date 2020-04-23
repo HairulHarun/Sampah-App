@@ -2,6 +2,7 @@ package com.gorontalo.chair.sampah_app.ui.dashboard;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,14 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.gorontalo.chair.sampah_app.LoginActivity;
+import com.gorontalo.chair.sampah_app.MainActivity;
 import com.gorontalo.chair.sampah_app.R;
 import com.gorontalo.chair.sampah_app.UserActivity;
 import com.gorontalo.chair.sampah_app.adapter.SessionAdapter;
@@ -25,6 +33,7 @@ import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 public class DashboardFragment extends Fragment {
+    private static final String TAG = MainActivity.class.getSimpleName();
     private TextView txtSopir, txtKondektur1, txtKondektur2, txtKenderaan, txtNoPolisi, txtHp, txtTanki;
     private ImageView btnLogout;
     private CircleImageView photoKenderaan, photoSopir, photoKondektur1, photoKondektur2;
@@ -93,10 +102,34 @@ public class DashboardFragment extends Fragment {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sessionAdapter.logoutUser();
+                deleteData(sessionAdapter.getId());
             }
         });
 
         return root;
+    }
+
+    private void deleteData(final String id) {
+        String email = getString(R.string.firebase_email);
+        String password = getString(R.string.firebase_password);
+
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    try {
+                        DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference().child("location_petugas").child(id);
+                        mPostReference.removeValue();
+
+                        sessionAdapter.logoutUser();
+                    }catch (IllegalStateException | NullPointerException e){
+                        Log.d("Main Activity", "Error Fragment");
+                    }
+                    Log.d(TAG, "firebase auth success");
+                } else {
+                    Log.d(TAG, "firebase auth failed");
+                }
+            }
+        });
     }
 }
