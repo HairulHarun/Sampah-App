@@ -253,18 +253,20 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
 
         if (status.equals("1")){
             markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.tps));
+
+            googleMap.addMarker(markerOptions);
+            googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                @Override
+                public void onInfoWindowClick(Marker marker) {
+                    TpsFragment bottomSheetFragment = new TpsFragment(marker.getTitle().toString());
+                    bottomSheetFragment.show(getActivity().getSupportFragmentManager(), bottomSheetFragment.getTag());
+                }
+            });
+
         }else{
             markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.tpsfull));
         }
 
-        googleMap.addMarker(markerOptions);
-        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-            @Override
-            public void onInfoWindowClick(Marker marker) {
-                TpsFragment bottomSheetFragment = new TpsFragment(marker.getTitle().toString());
-                bottomSheetFragment.show(getActivity().getSupportFragmentManager(), bottomSheetFragment.getTag());
-            }
-        });
     }
 
     private void addMarkerTPA(GoogleMap googleMap, LatLng latlng, final String nama) {
