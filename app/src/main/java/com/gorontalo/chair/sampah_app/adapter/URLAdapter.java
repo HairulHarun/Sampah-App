@@ -4,8 +4,8 @@ public class URLAdapter {
     /*private String URL = "http://192.168.0.104/sim-sampah/webservices/";
     private String URL_PHOTO = "http://192.168.0.104/admin-control/assets/images/photo/";*/
 
-    private String URL = "https://hairulharun.000webhostapp.com/sampah/webservices/";
-    private String URL_PHOTO = "https://hairulharun.000webhostapp.com/sampah/assets/images/photo/";
+    private String URL = "https://sim-sampah.web.id/webservices/";
+    private String URL_PHOTO = "https://sim-sampah.web.id/assets/images/photo/";
 
     public String getLogin(){
         return URL = URL+"ws-login-petugas.php";
