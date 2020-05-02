@@ -53,7 +53,7 @@ import java.util.Map;
 
 public class LaporTpsActivity extends AppCompatActivity {
     private static final String TAG = LaporTpsActivity.class.getSimpleName();
-    private EditText txtIsi;
+    private EditText txtIsi, txtNama, txtHp;
     private ImageView imgPhoto;
     private TextView txtNamaTps;
     private Button btnPilihPhoto;
@@ -85,6 +85,8 @@ public class LaporTpsActivity extends AppCompatActivity {
 
         imgPhoto = (ImageView) findViewById(R.id.imgPilihFoto);
         txtIsi = (EditText) findViewById(R.id.editTextIsiLaporan);
+        txtNama = (EditText) findViewById(R.id.txtNamaLaporan);
+        txtHp = (EditText) findViewById(R.id.txtHpLaporan);
         btnPilihPhoto = (Button) findViewById(R.id.btnPilihPhoto);
         txtNamaTps= (TextView) findViewById(R.id.txtLaporanNamaTps);
 
@@ -112,7 +114,7 @@ public class LaporTpsActivity extends AppCompatActivity {
                                 // check if all permissions are granted
                                 if (report.areAllPermissionsGranted()) {
                                     if (isInternetPresent = koneksiAdapter.isConnectingToInternet()) {
-                                        simpanLaporan(ID, txtIsi.getText().toString(), getStringImage(bitmap));
+                                        simpanLaporan(ID, txtNama.getText().toString(), txtHp.getText().toString(), txtIsi.getText().toString(), getStringImage(bitmap));
                                     }else{
                                         SnackbarManager.show(
                                                 com.nispok.snackbar.Snackbar.with(LaporTpsActivity.this)
@@ -170,7 +172,7 @@ public class LaporTpsActivity extends AppCompatActivity {
         }
     }
 
-    private void simpanLaporan(final String id_tps, final String isi, final String photo) {
+    private void simpanLaporan(final String id_tps, final String nama, final String hp, final String isi, final String photo) {
         HttpsTrustManagerAdapter.allowAllSSL();
         StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().simpanLaporanTps(), new Response.Listener<String>() {
 
@@ -201,6 +203,8 @@ public class LaporTpsActivity extends AppCompatActivity {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", id_tps);
+                params.put("nama", nama);
+                params.put("hp", hp);
                 params.put("isi", isi);
                 params.put("photo", photo);
 

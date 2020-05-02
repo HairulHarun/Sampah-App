@@ -58,7 +58,7 @@ import java.util.Map;
 
 public class LaporActivity extends AppCompatActivity {
     private static final String TAG = LaporActivity.class.getSimpleName();
-    private EditText txtIsi;
+    private EditText txtIsi, txtNama, txtHp;
     private ImageView imgPhoto;
     private TextView txtNamaPetugas;
     private Button btnPilihPhoto;
@@ -91,6 +91,8 @@ public class LaporActivity extends AppCompatActivity {
 
         imgPhoto = (ImageView) findViewById(R.id.imgPilihFoto);
         txtIsi = (EditText) findViewById(R.id.editTextIsiLaporan);
+        txtNama = (EditText) findViewById(R.id.txtNamaLaporan);
+        txtHp = (EditText) findViewById(R.id.txtHpLaporan);
         btnPilihPhoto = (Button) findViewById(R.id.btnPilihPhoto);
         txtNamaPetugas = (TextView) findViewById(R.id.txtLaporanNamaPetugas);
 
@@ -118,7 +120,7 @@ public class LaporActivity extends AppCompatActivity {
                                 // check if all permissions are granted
                                 if (report.areAllPermissionsGranted()) {
                                     if (isInternetPresent = koneksiAdapter.isConnectingToInternet()) {
-                                        simpanLaporan(ID, txtIsi.getText().toString(), getStringImage(bitmap));
+                                        simpanLaporan(ID, txtNama.getText().toString(), txtHp.getText().toString(), txtIsi.getText().toString(), getStringImage(bitmap));
                                     }else{
                                         SnackbarManager.show(
                                                 com.nispok.snackbar.Snackbar.with(LaporActivity.this)
@@ -175,7 +177,7 @@ public class LaporActivity extends AppCompatActivity {
         }
     }
 
-    private void simpanLaporan(final String id_petugas, final String isi, final String photo) {
+    private void simpanLaporan(final String id_petugas, final String nama, final String hp, final String isi, final String photo) {
         HttpsTrustManagerAdapter.allowAllSSL();
         StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().simpanLaporan(), new Response.Listener<String>() {
 
@@ -206,6 +208,8 @@ public class LaporActivity extends AppCompatActivity {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", id_petugas);
+                params.put("nama", nama);
+                params.put("hp", hp);
                 params.put("isi", isi);
                 params.put("photo", photo);
 

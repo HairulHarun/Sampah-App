@@ -72,6 +72,26 @@
             </LinearLayout>
 
             <EditText
+                android:id="@+id/txtNamaLaporan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Nama Anda"
+                android:inputType="textPersonName"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp" />
+
+            <EditText
+                android:id="@+id/txtHpLaporan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="No HP"
+                android:inputType="phone"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp" />
+
+            <EditText
                 android:id="@+id/editTextIsiLaporan"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
