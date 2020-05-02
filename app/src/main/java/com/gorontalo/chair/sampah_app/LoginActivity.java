@@ -68,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
 
         koneksiAdapter= new KoneksiAdapter(getApplicationContext());
         sessionAdapter = new SessionAdapter(getApplicationContext());
+        sessionAdapter.checkLogin();
 
         Dexter.withActivity(LoginActivity.this)
                 .withPermissions(

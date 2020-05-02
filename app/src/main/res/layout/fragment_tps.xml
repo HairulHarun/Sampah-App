@@ -57,7 +57,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="5dp"
-                android:text="Deskripsi"
+                android:text="Deskripsi TPS"
                 android:textStyle="bold" />
 
             <TextView
@@ -67,7 +67,7 @@
                 android:layout_margin="5dp"
                 android:clickable="true"
                 android:elevation="4dp"
-                android:text="Mengamdil Data ...." />
+                android:text="Mengamdil Data TPS ...." />
 
             <Button
                 android:id="@+id/btnTpsAngkut"
@@ -76,7 +76,8 @@
                 android:layout_marginTop="10dp"
                 android:background="@color/colorPrimaryDark"
                 android:text="ANGKUT"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:visibility="gone" />
 
         </LinearLayout>
     </RelativeLayout>

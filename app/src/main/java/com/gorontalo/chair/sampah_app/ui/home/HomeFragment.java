@@ -249,23 +249,22 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
 
     private void addMarker(GoogleMap googleMap, LatLng latlng, final String id, String status) {
         markerOptions.position(latlng);
-        markerOptions.title(id);
+        markerOptions.title(id+"/"+status);
 
         if (status.equals("1")){
             markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.tps));
-
-            googleMap.addMarker(markerOptions);
-            googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                @Override
-                public void onInfoWindowClick(Marker marker) {
-                    TpsFragment bottomSheetFragment = new TpsFragment(marker.getTitle().toString());
-                    bottomSheetFragment.show(getActivity().getSupportFragmentManager(), bottomSheetFragment.getTag());
-                }
-            });
-
         }else{
             markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.tpsfull));
         }
+
+        googleMap.addMarker(markerOptions);
+        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                TpsFragment bottomSheetFragment = new TpsFragment(marker.getTitle().toString());
+                bottomSheetFragment.show(getActivity().getSupportFragmentManager(), bottomSheetFragment.getTag());
+            }
+        });
 
     }
 

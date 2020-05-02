@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -65,12 +66,21 @@ public class TpsFragment extends BottomSheetDialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tps, container, false);
 
+        String[] items = ID.split("/");
+        String pisah_id = items[0];
+        String pisah_status = items[1];
+
         txtTpsNama = (TextView) view.findViewById(R.id.txtTpsNama);
         txtTpsDeskripsi = (TextView) view.findViewById(R.id.txtTpsDeskripsi);
         btnAngkut = (Button) view.findViewById(R.id.btnTpsAngkut);
         photoTps = view.findViewById(R.id.tps_photo);
 
-        getTPSById(ID);
+        getTPSById(pisah_id);
+        if (pisah_status.equals("1")){
+            btnAngkut.setVisibility(View.INVISIBLE);
+        }else {
+            btnAngkut.setVisibility(View.VISIBLE);
+        }
 
         return view;
     }

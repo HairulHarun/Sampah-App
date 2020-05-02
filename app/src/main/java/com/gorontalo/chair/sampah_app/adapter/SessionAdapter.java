@@ -66,7 +66,6 @@ public class SessionAdapter {
     }
 
     public void setLatLong(String latitude, String longitude){
-        editor.putBoolean(IS_LOGIN, true);
         editor.putString(KEY_LATITUDE, latitude);
         editor.putString(KEY_LONGITUDE, longitude);
         editor.commit();
