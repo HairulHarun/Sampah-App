@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -57,6 +59,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText txtUsername, txtPassword;
     private Button btnLogin;
 
+    private VideoView videoView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,10 +69,22 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btn_login);
         txtUsername = (EditText) findViewById(R.id.txt_username);
         txtPassword = (EditText) findViewById(R.id.txt_password);
+        videoView = (VideoView) findViewById(R.id.videoView);
 
         koneksiAdapter= new KoneksiAdapter(getApplicationContext());
         sessionAdapter = new SessionAdapter(getApplicationContext());
         sessionAdapter.checkLogin();
+
+        String path = "android.resource://" + getPackageName() + "/" + R.raw.bg;
+        videoView.setVideoURI(Uri.parse(path));
+        videoView.start();
+
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setLooping(true);
+            }
+        });
 
         Dexter.withActivity(LoginActivity.this)
                 .withPermissions(
@@ -163,6 +179,24 @@ public class LoginActivity extends AppCompatActivity {
                         .check();
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        videoView.pause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        videoView.stopPlayback();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        videoView.resume();
+        super.onResume();
     }
 
     private void getLogin(final String username, final String password) {
