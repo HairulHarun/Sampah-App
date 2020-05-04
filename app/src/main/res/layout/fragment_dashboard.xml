@@ -32,7 +32,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentRight="true"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="1dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
                 app:srcCompat="@drawable/ic_logout" />
@@ -57,6 +57,20 @@
                 android:text="DM 1211 BF"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/btnLogout"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toStartOf="@+id/btnLogout"
+                android:layout_toLeftOf="@+id/btnLogout"
+                android:text="LOGOUT"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold" />
 
         </RelativeLayout>
 
