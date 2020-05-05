@@ -14,8 +14,11 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -56,20 +59,31 @@ public class LoginActivity extends AppCompatActivity {
     int success;
     private Boolean isInternetPresent = false;
 
+    private ImageView logo;
     private EditText txtUsername, txtPassword;
     private Button btnLogin;
 
     private VideoView videoView;
+    private Animation topAnim, bottomAnim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        logo = (ImageView) findViewById(R.id.logo);
         btnLogin = findViewById(R.id.btn_login);
         txtUsername = (EditText) findViewById(R.id.txt_username);
         txtPassword = (EditText) findViewById(R.id.txt_password);
         videoView = (VideoView) findViewById(R.id.videoView);
+
+        topAnim = AnimationUtils.loadAnimation(this, R.anim.fromtop);
+        bottomAnim = AnimationUtils.loadAnimation(this, R.anim.frombottom);
+
+        logo.setAnimation(topAnim);
+        btnLogin.setAnimation(bottomAnim);
+        txtUsername.setAnimation(bottomAnim);
+        txtPassword.setAnimation(bottomAnim);
 
         koneksiAdapter= new KoneksiAdapter(getApplicationContext());
         sessionAdapter = new SessionAdapter(getApplicationContext());
