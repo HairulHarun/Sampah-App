@@ -35,6 +35,10 @@ public class URLAdapter {
         return URL = URL+"ws-get-tps-id.php";
     }
 
+    public String getTPAByID(){
+        return URL = URL+"ws-get-tpa-id.php";
+    }
+
     public String getPetugasByID(){
         return URL = URL+"ws-get-petugas-id.php";
     }

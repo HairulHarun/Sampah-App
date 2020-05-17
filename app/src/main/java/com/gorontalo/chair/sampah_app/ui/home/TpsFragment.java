@@ -68,18 +68,24 @@ public class TpsFragment extends BottomSheetDialogFragment {
 
         String[] items = ID.split("/");
         String pisah_id = items[0];
-        String pisah_status = items[1];
+        String pisah_jenis = items[1];
+        String pisah_status = items[2];
 
         txtTpsNama = (TextView) view.findViewById(R.id.txtTpsNama);
         txtTpsDeskripsi = (TextView) view.findViewById(R.id.txtTpsDeskripsi);
         btnAngkut = (Button) view.findViewById(R.id.btnTpsAngkut);
         photoTps = view.findViewById(R.id.tps_photo);
 
-        getTPSById(pisah_id);
-        if (pisah_status.equals("1")){
+        if (pisah_jenis.equals("TPA")){
+            getTPAById(pisah_id);
             btnAngkut.setVisibility(View.INVISIBLE);
-        }else {
-            btnAngkut.setVisibility(View.VISIBLE);
+        }else{
+            getTPSById(pisah_id);
+            if (pisah_status.equals("1")){
+                btnAngkut.setVisibility(View.INVISIBLE);
+            }else {
+                btnAngkut.setVisibility(View.VISIBLE);
+            }
         }
 
         return view;
@@ -117,6 +123,70 @@ public class TpsFragment extends BottomSheetDialogFragment {
                                 Intent intent = new Intent(getActivity().getApplicationContext(), PekerjaanActivity.class);
                                 intent.putExtra("id_tps", ID);
                                 intent.putExtra("nama_tps", nama_tps);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }
+                        });
+                    } else {
+                        Log.e(TAG, jObj.getString("hasil"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Get Data Error rute: " + error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id", id);
+
+                return params;
+            }
+        };
+
+        VolleyAdapter.getInstance().addToRequestQueue(strReq, "getPekerjaan");
+    }
+
+    private void getTPAById(final String id) {
+        HttpsTrustManagerAdapter.allowAllSSL();
+        StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().getTPAByID(), new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.e(TAG, "Data Response: " + response);
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    int success = jObj.getInt("success");
+                    if (success == 1) {
+                        final String nama_tpa = jObj.getString("nama");
+                        String photo_tpa = jObj.getString("photo");
+                        String deskripsi_tpa = jObj.getString("deskripsi");
+
+                        txtTpsNama.setText(nama_tpa);
+                        txtTpsDeskripsi.setText(deskripsi_tpa);
+
+                        Picasso.with(getActivity().getApplicationContext())
+                                .load(new URLAdapter().getPhotoTps(photo_tpa))
+                                .placeholder(R.mipmap.ic_launcher_round)
+                                .error(R.mipmap.ic_launcher_round)
+                                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                                .networkPolicy(NetworkPolicy.NO_CACHE)
+                                .into(photoTps);
+
+                        btnAngkut.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getActivity().getApplicationContext(), PekerjaanActivity.class);
+                                intent.putExtra("id_tps", ID);
+                                intent.putExtra("nama_tps", nama_tpa);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);

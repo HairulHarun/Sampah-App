@@ -199,11 +199,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
                     JSONObject jObj = new JSONObject(response);
                     int success = jObj.getInt("success");
                     if (success == 1) {
+                        String id_tpa = jObj.getString("id_tpa");
                         String lat_tpa = jObj.getString("lat_tpa");
                         String long_tpa = jObj.getString("long_tpa");
                         String nama_tpa = jObj.getString("nama_tpa");
 
-                        addMarkerTPA(googleMap, new LatLng(Double.valueOf(lat_tpa), Double.valueOf(long_tpa)), nama_tpa);
+                        addMarkerTPA(googleMap, new LatLng(Double.valueOf(lat_tpa), Double.valueOf(long_tpa)), id_tpa, nama_tpa);
 
                         JSONArray jsonArray = jObj.getJSONArray("hasil");
                         for (int i = 0; i < jsonArray.length(); i++) {
@@ -249,7 +250,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
 
     private void addMarker(GoogleMap googleMap, LatLng latlng, final String id, String status) {
         markerOptions.position(latlng);
-        markerOptions.title(id+"/"+status);
+        markerOptions.title(id+"/TPS/"+status);
 
         if (status.equals("1")){
             markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.tps));
@@ -268,11 +269,18 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
 
     }
 
-    private void addMarkerTPA(GoogleMap googleMap, LatLng latlng, final String nama) {
+    private void addMarkerTPA(GoogleMap googleMap, LatLng latlng, final String id, final String nama) {
         markerOptions.position(latlng);
-        markerOptions.title(nama);
+        markerOptions.title(id+"/TPA/"+""+nama);
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
         googleMap.addMarker(markerOptions);
+        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                TpsFragment bottomSheetFragment = new TpsFragment(marker.getTitle().toString());
+                bottomSheetFragment.show(getActivity().getSupportFragmentManager(), bottomSheetFragment.getTag());
+            }
+        });
     }
 
     private void getRute(final GoogleMap googleMap) {
