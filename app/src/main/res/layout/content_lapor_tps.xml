@@ -100,6 +100,15 @@
                 android:hint="Masukan Isi Laporan"
                 android:inputType="textMultiLine" />
 
+            <Button
+                android:id="@+id/btnKirimLaporanTPS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:visibility="invisible"
+                android:background="@color/colorAccent"
+                android:text="Kirim Laporan" />
+
         </LinearLayout>
     </ScrollView>
 

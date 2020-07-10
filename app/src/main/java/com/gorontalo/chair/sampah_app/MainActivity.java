@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gorontalo.chair.sampah_app.adapter.SessionAdapter;
@@ -45,6 +47,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.petugas, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_refresh) {
+            refresh();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onDestroy() {
         stopService(mServiceIntent);
         super.onDestroy();
@@ -64,6 +82,14 @@ public class MainActivity extends AppCompatActivity {
         }
         Log.i ("Service status", "Not running");
         return false;
+    }
+
+    private void refresh(){
+        Intent i = new Intent(MainActivity.this, MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(i);
     }
 
 }

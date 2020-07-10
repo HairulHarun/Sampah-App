@@ -61,8 +61,7 @@ public class LaporActivity extends AppCompatActivity {
     private EditText txtIsi, txtNama, txtHp;
     private ImageView imgPhoto;
     private TextView txtNamaPetugas;
-    private Button btnPilihPhoto;
-    private FloatingActionButton fab;
+    private Button btnPilihPhoto, btnKirim;
     private Intent intent;
 
     private int PICK_IMAGE_REQUEST = 1;
@@ -94,9 +93,8 @@ public class LaporActivity extends AppCompatActivity {
         txtNama = (EditText) findViewById(R.id.txtNamaLaporan);
         txtHp = (EditText) findViewById(R.id.txtHpLaporan);
         btnPilihPhoto = (Button) findViewById(R.id.btnPilihPhoto);
+        btnKirim = (Button) findViewById(R.id.btnKirimLaporan);
         txtNamaPetugas = (TextView) findViewById(R.id.txtLaporanNamaPetugas);
-
-        fab = (FloatingActionButton) findViewById(R.id.fab);
 
         txtNamaPetugas.setText(KENDERAAN+" "+SOPIR);
 
@@ -107,7 +105,7 @@ public class LaporActivity extends AppCompatActivity {
             }
         });
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        btnKirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Dexter.withActivity(LaporActivity.this)
@@ -171,6 +169,7 @@ public class LaporActivity extends AppCompatActivity {
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 imgPhoto.setImageBitmap(bitmap);
+                btnKirim.setVisibility(View.VISIBLE);
             } catch (IOException e) {
                 e.printStackTrace();
             }

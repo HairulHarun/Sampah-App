@@ -80,6 +80,8 @@ public class UserActivity extends AppCompatActivity implements OnMapReadyCallbac
         int id = item.getItemId();
         if (id == R.id.action_login) {
             startActivity(new Intent(UserActivity.this, LoginActivity.class));
+        }else if (id == R.id.action_refresh) {
+            refresh();
         }else if (id == R.id.action_pengumuman) {
             startActivity(new Intent(UserActivity.this, PengumumanActivity.class));
         }
@@ -408,5 +410,13 @@ public class UserActivity extends AppCompatActivity implements OnMapReadyCallbac
             Toast.makeText(getApplicationContext(), id, Toast.LENGTH_SHORT).show();
         }
         return false;
+    }
+
+    private void refresh(){
+        Intent i = new Intent(UserActivity.this, UserActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(i);
     }
 }
