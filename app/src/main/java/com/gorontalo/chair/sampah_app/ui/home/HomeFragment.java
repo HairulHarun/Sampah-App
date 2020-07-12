@@ -98,7 +98,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         try {
             if (!sessionAdapter.getId().equals("")) {
                 gMap = googleMap;
-                gMap.setMaxZoomPreference(16);
+                gMap.setMaxZoomPreference(21);
                 LatLng wollongong = new LatLng(0.57395177, 123.07756159);
                 gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(wollongong, 15));
                 gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -205,6 +205,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
                         String nama_tpa = jObj.getString("nama_tpa");
 
                         addMarkerTPA(googleMap, new LatLng(Double.valueOf(lat_tpa), Double.valueOf(long_tpa)), id_tpa, nama_tpa);
+                        addMarkerDinas(googleMap, new LatLng(0.6291906732516878, 122.98273801803589), "1", "Dinas Lingkungan Hidup dan SDA");
 
                         JSONArray jsonArray = jObj.getJSONArray("hasil");
                         for (int i = 0; i < jsonArray.length(); i++) {
@@ -273,6 +274,20 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         markerOptions.position(latlng);
         markerOptions.title(id+"/TPA/"+""+nama);
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+        googleMap.addMarker(markerOptions);
+        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                TpsFragment bottomSheetFragment = new TpsFragment(marker.getTitle().toString());
+                bottomSheetFragment.show(getActivity().getSupportFragmentManager(), bottomSheetFragment.getTag());
+            }
+        });
+    }
+
+    private void addMarkerDinas(GoogleMap googleMap, LatLng latlng, final String id, final String nama) {
+        markerOptions.position(latlng);
+        markerOptions.title(id+"/DINAS/"+""+nama);
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
         googleMap.addMarker(markerOptions);
         googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override

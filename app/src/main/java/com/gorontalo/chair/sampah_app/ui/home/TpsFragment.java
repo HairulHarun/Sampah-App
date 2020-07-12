@@ -27,6 +27,7 @@ import com.gorontalo.chair.sampah_app.MainActivity;
 import com.gorontalo.chair.sampah_app.PekerjaanActivity;
 import com.gorontalo.chair.sampah_app.R;
 import com.gorontalo.chair.sampah_app.adapter.HttpsTrustManagerAdapter;
+import com.gorontalo.chair.sampah_app.adapter.SessionAdapter;
 import com.gorontalo.chair.sampah_app.adapter.URLAdapter;
 import com.gorontalo.chair.sampah_app.adapter.VolleyAdapter;
 import com.squareup.picasso.MemoryPolicy;
@@ -48,6 +49,7 @@ public class TpsFragment extends BottomSheetDialogFragment {
     private TextView txtTpsNama, txtTpsDeskripsi;
     private Button btnAngkut;
     private CircleImageView photoTps;
+    private SessionAdapter sessionAdapter;
 
     public TpsFragment() {
         // Required empty public constructor
@@ -66,6 +68,8 @@ public class TpsFragment extends BottomSheetDialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tps, container, false);
 
+        sessionAdapter = new SessionAdapter(getActivity().getApplicationContext());
+
         String[] items = ID.split("/");
         String pisah_id = items[0];
         String pisah_jenis = items[1];
@@ -78,7 +82,9 @@ public class TpsFragment extends BottomSheetDialogFragment {
 
         if (pisah_jenis.equals("TPA")){
             getTPAById(pisah_id);
-            btnAngkut.setVisibility(View.INVISIBLE);
+            btnAngkut.setBackgroundResource(R.color.colorRed);
+            btnAngkut.setVisibility(View.VISIBLE);
+            btnAngkut.setText("BUANG ?");
         }else{
             getTPSById(pisah_id);
             if (pisah_status.equals("1")){
@@ -184,12 +190,7 @@ public class TpsFragment extends BottomSheetDialogFragment {
                         btnAngkut.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent = new Intent(getActivity().getApplicationContext(), PekerjaanActivity.class);
-                                intent.putExtra("id_tps", ID);
-                                intent.putExtra("nama_tps", nama_tpa);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
+                                buangSampah();
                             }
                         });
                     } else {
@@ -217,5 +218,56 @@ public class TpsFragment extends BottomSheetDialogFragment {
         };
 
         VolleyAdapter.getInstance().addToRequestQueue(strReq, "getPekerjaan");
+    }
+
+    private void buangSampah() {
+        HttpsTrustManagerAdapter.allowAllSSL();
+        StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().buangSampah(), new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.e(TAG, "Data Response: " + response);
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    int success = jObj.getInt("success");
+                    if (success == 1) {
+                        Toast.makeText(getActivity().getApplicationContext(), jObj.getString("hasil").toString(), Toast.LENGTH_LONG).show();
+                        refresh();
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(), jObj.getString("hasil").toString(), Toast.LENGTH_LONG).show();
+                        Log.e(TAG, jObj.getString("hasil"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Get Data Error rute: " + error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id", sessionAdapter.getId());
+                params.put("latitude", sessionAdapter.getLatitude());
+                params.put("longitude", sessionAdapter.getLongitude());
+
+                return params;
+            }
+        };
+
+        VolleyAdapter.getInstance().addToRequestQueue(strReq, "getPekerjaan");
+    }
+
+    private void refresh(){
+        Intent i = new Intent(getActivity(), MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(i);
     }
 }
