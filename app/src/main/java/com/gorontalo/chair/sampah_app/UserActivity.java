@@ -78,9 +78,7 @@ public class UserActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_login) {
-            startActivity(new Intent(UserActivity.this, LoginActivity.class));
-        }else if (id == R.id.action_refresh) {
+        if (id == R.id.action_refresh) {
             refresh();
         }else if (id == R.id.action_pengumuman) {
             startActivity(new Intent(UserActivity.this, PengumumanActivity.class));
@@ -111,7 +109,7 @@ public class UserActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void onBackPressed(){
-        moveTaskToBack(true);
+        startActivity(new Intent(UserActivity.this, BerandaActivity.class));
     }
 
     private void getPekerjaan(final GoogleMap googleMap) {

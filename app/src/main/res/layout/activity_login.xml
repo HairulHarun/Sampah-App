@@ -11,17 +11,11 @@
         android:layout_height="match_parent"
         android:gravity="center">
 
-        <VideoView
-            android:id="@+id/videoView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_centerInParent="true"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
+            android:background="@drawable/bg"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="20dp">

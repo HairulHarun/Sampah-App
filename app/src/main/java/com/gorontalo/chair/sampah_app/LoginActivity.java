@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText txtUsername, txtPassword;
     private Button btnLogin;
 
-    private VideoView videoView;
+//    private VideoView videoView;
     private Animation topAnim, bottomAnim;
 
     @Override
@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btn_login);
         txtUsername = (EditText) findViewById(R.id.txt_username);
         txtPassword = (EditText) findViewById(R.id.txt_password);
-        videoView = (VideoView) findViewById(R.id.videoView);
+//        videoView = (VideoView) findViewById(R.id.videoView);
 
         topAnim = AnimationUtils.loadAnimation(this, R.anim.fromtop);
         bottomAnim = AnimationUtils.loadAnimation(this, R.anim.frombottom);
@@ -90,15 +90,15 @@ public class LoginActivity extends AppCompatActivity {
         sessionAdapter.checkLogin();
 
         String path = "android.resource://" + getPackageName() + "/" + R.raw.bg;
-        videoView.setVideoURI(Uri.parse(path));
-        videoView.start();
+//        videoView.setVideoURI(Uri.parse(path));
+//        videoView.start();
 
-        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+        /*videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 mp.setLooping(true);
             }
-        });
+        });*/
 
         Dexter.withActivity(LoginActivity.this)
                 .withPermissions(
@@ -197,19 +197,19 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        videoView.pause();
+//        videoView.pause();
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-        videoView.stopPlayback();
+//        videoView.stopPlayback();
         super.onDestroy();
     }
 
     @Override
     protected void onResume() {
-        videoView.resume();
+//        videoView.resume();
         super.onResume();
     }
 
@@ -326,6 +326,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onBackPressed(){
-        startActivity(new Intent(LoginActivity.this, UserActivity.class));
+        startActivity(new Intent(LoginActivity.this, BerandaActivity.class));
     }
 }

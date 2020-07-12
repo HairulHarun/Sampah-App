@@ -85,6 +85,17 @@ public class TpsFragment extends BottomSheetDialogFragment {
             btnAngkut.setBackgroundResource(R.color.colorRed);
             btnAngkut.setVisibility(View.VISIBLE);
             btnAngkut.setText("BUANG ?");
+        }else if (pisah_jenis.equals("DINAS")){
+            btnAngkut.setVisibility(View.INVISIBLE);
+            txtTpsNama.setText("Dinas Lingkugan Hidup dan SDA");
+            txtTpsDeskripsi.setText("Alamat : Kayubulan, Limboto, Gorontalo, 96181");
+            Picasso.with(getActivity().getApplicationContext())
+                    .load("https://i0.wp.com/hulondalo.id/wp-content/uploads/2019/11/Hulondalo.id-Stuban-DLH-Boltim.jpeg?resize=720%2C405&ssl=1")
+                    .placeholder(R.mipmap.ic_launcher_round)
+                    .error(R.mipmap.ic_launcher_round)
+                    .memoryPolicy(MemoryPolicy.NO_CACHE)
+                    .networkPolicy(NetworkPolicy.NO_CACHE)
+                    .into(photoTps);
         }else{
             getTPSById(pisah_id);
             if (pisah_status.equals("1")){

@@ -18,7 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PengumumanActivity"></activity>
+        <activity
+            android:name=".BerandaActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".PengumumanActivity" />
         <activity
             android:name=".LaporTpsActivity"
             android:label="@string/title_activity_lapor_tps"
