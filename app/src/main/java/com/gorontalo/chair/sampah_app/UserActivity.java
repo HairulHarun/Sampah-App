@@ -97,12 +97,6 @@ public class UserActivity extends AppCompatActivity implements OnMapReadyCallbac
             loginToFirebase(googleMap);
             getPekerjaan(googleMap);
 
-            String[] dataPetugas = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
-
-            for (int i = 0; i < dataPetugas.length; i++){
-                getRute(googleMap, dataPetugas[i]);
-            }
-
         }catch (NullPointerException e){
 
         }
@@ -275,81 +269,6 @@ public class UserActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         googleMap.addMarker(markerOptions);
         googleMap.setOnMarkerClickListener(this);
-    }
-
-    private void getRute(final GoogleMap googleMap, final String id_petugas) {
-        HttpsTrustManagerAdapter.allowAllSSL();
-        StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().getRute(), new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                Log.e(TAG, "Data Response: " + response);
-                try {
-                    JSONObject jObj = new JSONObject(response);
-                    int success = jObj.getInt("success");
-                    if (success == 1) {
-                        JSONArray jsonArray = jObj.getJSONArray("hasil");
-                        List<LatLng> position = new ArrayList<>();
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            try {
-                                JSONObject obj = jsonArray.getJSONObject(i);
-
-                                String id_rute = obj.getString("id");
-                                String id_petugas = obj.getString("id_petugas");
-                                double lat_rute = Double.valueOf(obj.getString("lat_rute"));
-                                double long_rute = Double.valueOf(obj.getString("long_rute"));
-
-                                position.add(new LatLng(lat_rute, long_rute));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        drawPolyLineOnMap(googleMap, position);
-                    } else {
-                        Log.e(TAG, jObj.getString("hasil"));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Get Data Error rute: " + error.getMessage());
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                // Posting parameters to login url
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("id_petugas", id_petugas);
-                return params;
-            }
-        };
-
-        VolleyAdapter.getInstance().addToRequestQueue(strReq, "getPekerjaan");
-    }
-
-    public void drawPolyLineOnMap(GoogleMap googleMap, List<LatLng> list) {
-        Random rnd = new Random();
-        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-
-        PolylineOptions polyOptions = new PolylineOptions();
-        polyOptions.color(color);
-        polyOptions.width(8);
-        polyOptions.addAll(list);
-
-//        googleMap.clear();
-        googleMap.addPolyline(polyOptions);
-
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        for (LatLng latLng : list) {
-            builder.include(latLng);
-        }
-
-        final LatLngBounds bounds = builder.build();
     }
 
     private void getPengumuman() {

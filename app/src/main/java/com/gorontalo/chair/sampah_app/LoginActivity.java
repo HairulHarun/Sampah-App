@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         sessionAdapter = new SessionAdapter(getApplicationContext());
         sessionAdapter.checkLogin();
 
-        String path = "android.resource://" + getPackageName() + "/" + R.raw.bg;
+//        String path = "android.resource://" + getPackageName() + "/" + R.raw.bg;
 //        videoView.setVideoURI(Uri.parse(path));
 //        videoView.start();
 
