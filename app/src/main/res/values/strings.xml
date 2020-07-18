@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sampah-App</string>
+    <string name="app_name">SIMOPSA</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_home">Beranda</string>
     <string name="title_dashboard">Profil</string>

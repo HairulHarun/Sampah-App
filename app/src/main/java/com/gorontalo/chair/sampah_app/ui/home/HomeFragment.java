@@ -273,7 +273,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
     private void addMarkerTPA(GoogleMap googleMap, LatLng latlng, final String id, final String nama) {
         markerOptions.position(latlng);
         markerOptions.title(id+"/TPA/"+""+nama);
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.tpsfull));
         googleMap.addMarker(markerOptions);
         googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override

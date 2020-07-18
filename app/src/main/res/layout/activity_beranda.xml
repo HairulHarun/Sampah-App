@@ -20,14 +20,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="20dp"
+            app:srcCompat="@drawable/logokab" />
+
         <TextView
             android:id="@+id/textView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="SELAMAT DATANG "
-            android:textColor="@color/colorAccent"
-            android:textSize="18sp"
+            android:textColor="@color/colorBlack"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <TextView
@@ -35,8 +42,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="SISTEM INFORMASI MONITORING PETUGAS SAMPAH"
-            android:textColor="@color/colorWhite"
+            android:text="Di Sistem Informasi Monitoring Petugas Sampah"
+            android:textColor="@color/colorBlack"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -45,7 +52,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="DINAS LINGKUNGAN HIDUP DAN SDA"
+            android:text="Dinas Lingkungan Hidup dan SDA"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Kabupaten Gorontalo"
             android:textColor="@color/colorWhite"
             android:textSize="18sp"
             android:textStyle="italic" />
