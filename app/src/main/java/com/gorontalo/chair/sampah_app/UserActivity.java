@@ -265,7 +265,7 @@ public class UserActivity extends AppCompatActivity implements OnMapReadyCallbac
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latlng);
         markerOptions.title(statusmarker);
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.tpsfull));
 
         googleMap.addMarker(markerOptions);
         googleMap.setOnMarkerClickListener(this);
