@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@color/colorPrimaryDark"
-                android:text="ANGKUT"
+                android:text="ANGKUT SAMPAH"
                 android:textColor="@color/colorWhite"
                 android:visibility="gone" />
 
