@@ -187,7 +187,7 @@ public class TrackingService extends Service implements LocationListener {
 
     @Override
     public void onProviderDisabled(String provider) {
-        Toast.makeText(this, "Jaringan tidak di izinkan!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Lokasi Belum Dapat Di Akses, Mohon Tunggu Sebentar !", Toast.LENGTH_SHORT).show();
     }
 
     private void startGettingLocations() {
