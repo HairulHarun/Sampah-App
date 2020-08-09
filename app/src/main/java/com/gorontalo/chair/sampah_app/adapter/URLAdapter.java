@@ -27,6 +27,10 @@ public class URLAdapter {
         return URL = URL+"ws-get-pengumuman.php";
     }
 
+    public String getLaporanPetugas(){
+        return URL = URL+"ws-get-laporan-petugas.php";
+    }
+
     public String getLastPengumuman(){
         return URL = URL+"ws-get-last-pengumuman.php";
     }
@@ -65,6 +69,10 @@ public class URLAdapter {
 
     public String getPhotoPetugas(String photo){
         return URL = URL_PHOTO+"/petugas/"+photo;
+    }
+
+    public String getPhotoLaporan(String photo){
+        return URL = URL_PHOTO+"/laporan/"+photo;
     }
 
     public String getPhotoTps(String photo){

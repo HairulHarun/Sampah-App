@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
             refresh();
+        }else if (id == R.id.action_laporan) {
+            startActivity(new Intent(MainActivity.this, LaporanPetugasActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
