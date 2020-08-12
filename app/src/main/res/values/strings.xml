@@ -4,8 +4,14 @@
     <string name="title_home">Beranda</string>
     <string name="title_dashboard">Profil</string>
     <string name="title_notifications">Tentang</string>
+    <string name="versi">
+        SIMOPSA Version 1.0 2020
+    </string>
+    <string name="copyright">
+        Copyright @Aplikasi SIMOPSA 2020
+    </string>
     <string name="about">
-        Sampah-App Merupakan Sebuah Aplikasi Berbasis Android Untuk Melakukan Monitoring terhadap Sampah dan Petugas Sampah
+        SIMOPSA Merupakan Sebuah Aplikasi Berbasis Android Untuk Melakukan Monitoring terhadap Sampah dan Petugas Sampah
     </string>
 
     <string name="firebase_email" translatable="false">chairulharun@gmail.com</string>

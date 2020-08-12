@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,22 +19,72 @@
         android:id="@+id/txtPengumuman"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="634dp"
+        android:background="@color/colorSoftGrey"
         android:ellipsize="marquee"
         android:focusable="auto"
         android:focusableInTouchMode="true"
+        android:gravity="center_horizontal"
         android:marqueeRepeatLimit="marquee_forever"
+        android:padding="15dp"
         android:scrollHorizontally="true"
         android:singleLine="true"
-        android:textSize="18sp"
-        android:textStyle="bold|italic"
-        tools:ignore="HardcodedText"
-        android:background="@color/colorSoftGrey"
-        android:padding="15dp"
         android:text="Mengambil Pengumuman ..."
         android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:gravity="center_horizontal" />
+        tools:ignore="HardcodedText" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPengumuman">
+
+        <Button
+            android:id="@+id/btnUserHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:drawableTop="@drawable/ic_home"
+            android:padding="3dp"
+            android:text="Beranda"
+            android:textColor="@color/colorWhite" />
+
+        <Button
+            android:id="@+id/btnUserTentang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:drawableTop="@drawable/ic_tentang"
+            android:padding="3dp"
+            android:text="Tentang"
+            android:textColor="@color/colorWhite" />
+
+        <Button
+            android:id="@+id/btnUserKeluar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:drawableTop="@drawable/ic_keluar"
+            android:padding="3dp"
+            android:text="Keluar"
+            android:textColor="@color/colorWhite" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

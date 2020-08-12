@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".LaporanPetugasActivity"></activity>
+        <activity android:name=".TentangActivity"></activity>
+        <activity android:name=".LaporanPetugasActivity" />
         <activity
             android:name=".BerandaActivity"
             android:theme="@style/AppTheme.NoActionBar" />

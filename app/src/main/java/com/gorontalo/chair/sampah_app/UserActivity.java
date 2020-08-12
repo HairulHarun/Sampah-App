@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +58,7 @@ public class UserActivity extends AppCompatActivity implements OnMapReadyCallbac
     private SupportMapFragment mapFragment;
     private Marker markerPetugas, markerTps, markerTPA;
     private TextView txtPengumuman;
+    private Button btnHome, btnTentang, btnKeluar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +66,35 @@ public class UserActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_user);
 
         txtPengumuman = (TextView) findViewById(R.id.txtPengumuman);
+        btnHome = (Button) findViewById(R.id.btnUserHome);
+        btnTentang = (Button) findViewById(R.id.btnUserTentang);
+        btnKeluar = (Button) findViewById(R.id.btnUserKeluar);
+
         getPengumuman();
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserActivity.this, BerandaActivity.class));
+            }
+        });
+
+        btnTentang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserActivity.this, TentangActivity.class));
+            }
+        });
+
+        btnKeluar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                moveTaskToBack(true);
+            }
+        });
     }
 
     @Override
