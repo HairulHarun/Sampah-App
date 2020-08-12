@@ -11,7 +11,7 @@
         Copyright @Aplikasi SIMOPSA 2020
     </string>
     <string name="about">
-        SIMOPSA Merupakan Sebuah Aplikasi Berbasis Android Untuk Melakukan Monitoring terhadap Sampah dan Petugas Sampah
+        SIMOPSA Merupakan Sebuah Aplikasi Berbasis Android untuk Melakukan Monitoring Petugas Sampah Dinas Lingkungan Hidup dan SDA Kabupaten Gorontalo
     </string>
 
     <string name="firebase_email" translatable="false">chairulharun@gmail.com</string>

@@ -84,7 +84,8 @@ public class TpsFragment extends BottomSheetDialogFragment {
             getTPAById(pisah_id);
             btnAngkut.setBackgroundResource(R.color.colorRed);
             btnAngkut.setVisibility(View.VISIBLE);
-            btnAngkut.setText("BUANG ?");
+            txtTpsDeskripsi.setText("Deskripsi TPA");
+            btnAngkut.setText("BUANG SAMPAH?");
         }else if (pisah_jenis.equals("DINAS")){
             btnAngkut.setVisibility(View.INVISIBLE);
             txtTpsNama.setText("Dinas Lingkugan Hidup dan SDA");

@@ -68,7 +68,7 @@
                 android:layout_marginBottom="5dp"
                 android:layout_toStartOf="@+id/btnLogout"
                 android:layout_toLeftOf="@+id/btnLogout"
-                android:text="LOGOUT"
+                android:text="KELUAR"
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold" />
 

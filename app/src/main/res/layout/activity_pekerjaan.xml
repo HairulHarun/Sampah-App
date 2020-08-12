@@ -81,9 +81,12 @@
                 android:id="@+id/txtSeekbarValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:text="0"
-                android:visibility="gone" />
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="30dp"
+                android:layout_margin="10dp"
+                android:visibility="visible" />
 
             <SeekBar
                 android:id="@+id/seekBarTanki"
@@ -99,7 +102,7 @@
                 android:layout_margin="10dp"
                 android:layout_marginBottom="20dp"
                 android:background="@color/colorPrimaryDark"
-                android:text="Kirim Data"
+                android:text="Angkut Sampah"
                 android:textColor="@color/colorWhite" />
 
         </LinearLayout>
