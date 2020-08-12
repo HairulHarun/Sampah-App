@@ -9,17 +9,15 @@
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="411dp"
-        android:layout_height="695dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
         app:layout_constraintTop_toBottomOf="@+id/txtPengumuman" />
 
     <TextView
         android:id="@+id/txtPengumuman"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="634dp"
         android:background="@color/colorSoftGrey"
         android:ellipsize="marquee"
         android:focusable="auto"
@@ -33,7 +31,6 @@
         android:textColor="@color/colorAccent"
         android:textSize="18sp"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -43,15 +40,14 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:background="@color/colorPrimaryDark"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="3dp"
+        android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPengumuman">
+        app:layout_constraintTop_toBottomOf="@+id/map">
 
         <Button
             android:id="@+id/btnUserHome"
