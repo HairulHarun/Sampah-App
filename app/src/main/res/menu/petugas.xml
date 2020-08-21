@@ -11,7 +11,8 @@
     <item
         android:id="@+id/action_laporan"
         android:icon="@drawable/ic_lapor"
-        app:showAsAction="always"
-        android:title="Laporan" />
+        android:title="Laporan"
+        app:actionLayout="@layout/custom_menu_item"
+        app:showAsAction="always"/>
 
 </menu>

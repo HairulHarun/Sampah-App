@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gorontalo.chair.sampah_app.adapter.SessionAdapter;
@@ -22,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
     Intent mServiceIntent;
     private TrackingService myService;
     private SessionAdapter sessionAdapter;
+
+    TextView textCartItemCount;
+    int mCartItemCount = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.petugas, menu);
+
+        final MenuItem menuItem = menu.findItem(R.id.action_laporan);
+        View actionView = menuItem.getActionView();
+        textCartItemCount = (TextView) actionView.findViewById(R.id.cart_badge);
+
+        setupBadge();
+
+        actionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(menuItem);
+            }
+        });
+
         return true;
     }
 
@@ -68,6 +87,21 @@ public class MainActivity extends AppCompatActivity {
     public void onDestroy() {
         stopService(mServiceIntent);
         super.onDestroy();
+    }
+
+    private void setupBadge() {
+        if (textCartItemCount != null) {
+            if (mCartItemCount == 0) {
+                if (textCartItemCount.getVisibility() != View.GONE) {
+                    textCartItemCount.setVisibility(View.GONE);
+                }
+            } else {
+                textCartItemCount.setText(String.valueOf(Math.min(mCartItemCount, 99)));
+                if (textCartItemCount.getVisibility() != View.VISIBLE) {
+                    textCartItemCount.setVisibility(View.VISIBLE);
+                }
+            }
+        }
     }
 
     public void onBackPressed(){
