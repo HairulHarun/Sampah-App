@@ -35,6 +35,10 @@ public class URLAdapter {
         return URL = URL+"ws-get-last-pengumuman.php";
     }
 
+    public String getJumlahLaporan(){
+        return URL = URL+"ws-get-jumlah-laporan.php";
+    }
+
     public String getTPSByID(){
         return URL = URL+"ws-get-tps-id.php";
     }

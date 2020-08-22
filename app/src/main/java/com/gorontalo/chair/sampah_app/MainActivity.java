@@ -9,9 +9,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.gorontalo.chair.sampah_app.adapter.HttpsTrustManagerAdapter;
+import com.gorontalo.chair.sampah_app.adapter.RecycleViewPengumumanAdapter;
 import com.gorontalo.chair.sampah_app.adapter.SessionAdapter;
+import com.gorontalo.chair.sampah_app.adapter.URLAdapter;
+import com.gorontalo.chair.sampah_app.adapter.VolleyAdapter;
+import com.gorontalo.chair.sampah_app.model.PengumumanModel;
 import com.gorontalo.chair.sampah_app.service.TrackingService;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,13 +30,23 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG_SUCCESS = "success";
+    private static final String TAG_HASIL = "message";
+
     Intent mServiceIntent;
     private TrackingService myService;
     private SessionAdapter sessionAdapter;
 
     TextView textCartItemCount;
-    int mCartItemCount = 10;
+    int mCartItemCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,18 +110,50 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupBadge() {
-        if (textCartItemCount != null) {
-            if (mCartItemCount == 0) {
-                if (textCartItemCount.getVisibility() != View.GONE) {
-                    textCartItemCount.setVisibility(View.GONE);
-                }
-            } else {
-                textCartItemCount.setText(String.valueOf(Math.min(mCartItemCount, 99)));
-                if (textCartItemCount.getVisibility() != View.VISIBLE) {
-                    textCartItemCount.setVisibility(View.VISIBLE);
+        HttpsTrustManagerAdapter.allowAllSSL();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, new URLAdapter().getJumlahLaporan(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jObj = new JSONObject(response.toString());
+                    int success = jObj.getInt(TAG_SUCCESS);
+                    if (success == 1) {
+                        mCartItemCount = jObj.getInt(TAG_HASIL);
+
+                        if (textCartItemCount != null) {
+                            if (mCartItemCount == 0) {
+                                if (textCartItemCount.getVisibility() != View.GONE) {
+                                    textCartItemCount.setVisibility(View.GONE);
+                                }
+                            } else {
+                                textCartItemCount.setText(String.valueOf(Math.min(mCartItemCount, 99)));
+                                if (textCartItemCount.getVisibility() != View.VISIBLE) {
+                                    textCartItemCount.setVisibility(View.VISIBLE);
+                                }
+                            }
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
-        }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Volley", error.toString());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id_petugas", sessionAdapter.getId());
+                return params;
+            }
+
+        };
+
+        VolleyAdapter.getInstance().addToRequestQueue(stringRequest, "json_pekerjaan");
     }
 
     public void onBackPressed(){
